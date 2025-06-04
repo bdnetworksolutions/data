@@ -414,7 +414,7 @@
             display: none; /* Hidden by default, will be set to flex when 'open' */
             flex-direction: column;
             align-items: center;
-            justify: flex-start;
+            justify-content: flex-start;
         }
         #mobile-menu.open {
             transform: translateX(0); /* Slide into view */
@@ -543,6 +543,64 @@
                 font-size: 3rem; /* text-3xl for desktop */
             }
         }
+
+        /* Style for password input container to position the toggle button */
+        .password-input-container {
+            position: relative;
+            width: 100%;
+        }
+
+        /* Style for the password toggle button */
+        .password-toggle {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: #6b7280; /* gray-500 */
+            font-size: 1rem;
+            padding: 0.25rem;
+            border-radius: 0.25rem;
+            transition: color 0.2s ease-in-out;
+        }
+
+        .password-toggle:hover {
+            color: #1f2937; /* Darker gray on hover */
+        }
+
+        /* Styles for individual order item in the form */
+        .single-order-item {
+            border: 1px solid #e2e8f0; /* Light gray border */
+            border-radius: 0.5rem;
+            padding: 1rem;
+            margin-bottom: 1rem; /* Space between multiple order items */
+            background-color: #f8fafc; /* Very light background */
+            position: relative; /* For positioning remove button */
+        }
+
+        .remove-order-item-btn {
+            position: absolute;
+            top: 0.5rem;
+            right: 0.5rem;
+            background-color: #ef4444; /* Red */
+            color: white;
+            border: none;
+            border-radius: 50%; /* Circular button */
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: background-color 0.2s ease-in-out;
+        }
+
+        .remove-order-item-btn:hover {
+            background-color: #dc2626; /* Darker red */
+        }
     </style>
 </head>
 <body>
@@ -623,17 +681,21 @@
                         </div>
                     </div>
 
-                    <form class="space-y-4 md:space-y-6" id="signInForm"> <div>
+                    <form class="space-y-4 md:space-y-6" id="signInForm">
+                        <div>
                             <label for="signin-email" class="sr-only">Email Address</label>
                             <input id="signin-email" name="email" type="email" autocomplete="email" required
                                    class="appearance-none relative block w-full input-field"
                                    placeholder="Email">
                         </div>
-                        <div>
+                        <div class="password-input-container">
                             <label for="signin-password" class="sr-only">Password</label>
                             <input id="signin-password" name="password" type="password" autocomplete="current-password" required
                                    class="appearance-none relative block w-full input-field"
                                    placeholder="Password">
+                            <button type="button" id="toggle-signin-password" class="password-toggle" aria-label="Show password">
+                                <i class="fas fa-eye"></i>
+                            </button>
                         </div>
 
                         <div class="flex items-center justify-between">
@@ -663,7 +725,8 @@
                         Not a Member yet? <span class="auth-toggle-link text-blue-600 hover:text-blue-800 cursor-pointer" data-target="signup">Sign Up</span>
                     </p>
 
-                    <form class="space-y-4 md:space-y-6 hidden" id="signUpForm"> <div>
+                    <form class="space-y-4 md:space-y-6 hidden" id="signUpForm">
+                        <div>
                             <label for="signup-name" class="sr-only">Your Name</label>
                             <input id="signup-name" name="name" type="text" required
                                    class="appearance-none relative block w-full input-field"
@@ -675,17 +738,23 @@
                                    class="appearance-none relative block w-full input-field"
                                    placeholder="Email Address">
                         </div>
-                        <div>
+                        <div class="password-input-container">
                             <label for="signup-password" class="sr-only">Password</label>
                             <input id="signup-password" name="password" type="password" autocomplete="new-password" required
                                    class="appearance-none relative block w-full input-field"
                                    placeholder="Password">
+                            <button type="button" id="toggle-signup-password" class="password-toggle" aria-label="Show password">
+                                <i class="fas fa-eye"></i>
+                            </button>
                         </div>
-                        <div>
+                        <div class="password-input-container">
                             <label for="signup-confirm-password" class="sr-only">Confirm Password</label>
                             <input id="signup-confirm-password" name="confirmPassword" type="password" autocomplete="new-password" required
                                    class="appearance-none relative block w-full input-field"
                                    placeholder="Confirm Password">
+                            <button type="button" id="toggle-signup-confirm-password" class="password-toggle" aria-label="Show password">
+                                <i class="fas fa-eye"></i>
+                            </button>
                         </div>
                         <div class="mt-6">
                             <button type="submit"
@@ -695,7 +764,8 @@
                         </div>
                     </form>
 
-                    <form class="space-y-4 md:space-y-6 hidden" id="forgotPasswordForm"> <div>
+                    <form class="space-y-4 md:space-y-6 hidden" id="forgotPasswordForm">
+                        <div>
                             <h2 class="mt-6 text-center text-3xl font-extrabold text-gray-900">
                                 Reset Password
                             </h2>
@@ -735,7 +805,8 @@
                 <button id="signOutButton">Sign Out</button>
             </div>
 
-            <div id="dashboard-content-area"> <div class="dashboard-nav-buttons flex flex-wrap justify-center gap-4 mb-8">
+            <div id="dashboard-content-area">
+                <div class="dashboard-nav-buttons flex flex-wrap justify-center gap-4 mb-8">
                     <button id="order-placement-btn" class="active">
                         <i class="fas fa-shopping-cart"></i> Order Data
                     </button>
@@ -748,7 +819,8 @@
                 </div>
 
                 <section id="order-placement-section">
-                    <div id="order-details-step" class="p-6 md:p-8"> <h3 class="mt-6 text-center text-3xl font-extrabold text-yellow-400 mb-6 flex items-center justify-center">
+                    <div id="order-details-step" class="p-6 md:p-8">
+                        <h3 class="mt-6 text-center text-3xl font-extrabold text-yellow-400 mb-6 flex items-center justify-center">
                             <img src="https://placehold.co/40x40/FFD700/000000?text=MTN" alt="MTN Logo" class="h-10 w-auto mr-3 rounded-full">
                             MTNUP2U DATA BUNDLE
                         </h3>
@@ -756,39 +828,17 @@
                             Fill in your details to place your order.
                         </p>
                         <form class="mt-8 space-y-6" id="orderForm">
-                            <div class="rounded-md shadow-sm">
-                                <div>
-                                    <label for="contact-number" class="sr-only">Contact Number</label>
-                                    <input id="contact-number" name="contactNumber" type="text" required
-                                           class="appearance-none relative block w-full input-field"
-                                           placeholder="Contact Number (e.g., 0531323296)">
-                                </div>
-                                <div>
-                                    <label for="data-size" class="sr-only">Data Size</label>
-                                    <select id="data-size" name="dataSize" required
-                                            class="appearance-none relative block w-full input-field">
-                                        <option value="" disabled selected>Select Data Size</option>
-                                        <option value="1GB">1GB</option>
-                                        <option value="2GB">2GB</option>
-                                        <option value="3GB">3GB</option>
-                                        <option value="4GB">4GB</option>
-                                        <option value="5GB">5GB</option>
-                                        <option value="6GB">6GB</option>
-                                        <option value="8GB">8GB</option>
-                                        <option value="10GB">10GB</option>
-                                        <option value="15GB">15GB</option>
-                                        <option value="20GB">20GB</option>
-                                        <option value="30GB">30GB</option>
-                                        <option value="50GB">50GB</option>
-                                        <option value="100GB">100GB</option>
-                                    </select>
-                                </div>
-                                <div>
-                                    <label for="amount" class="sr-only">Amount</label>
-                                    <input id="amount" name="amount" type="text" readonly
-                                           class="appearance-none relative block w-full input-field"
-                                           placeholder="Amount (Ghc)" value="">
-                                </div>
+                            <!-- Container for multiple order items -->
+                            <div id="order-items-container">
+                                <!-- Initial order item will be added by JavaScript -->
+                            </div>
+
+                            <button type="button" id="add-another-order-btn" class="submit-button w-full py-2 px-4 rounded-md text-sm font-medium shadow-md transition-all duration-200 ease-in-out hover:shadow-lg mt-4">
+                                Add Another Order
+                            </button>
+
+                            <div class="mt-6 text-right">
+                                <p class="text-lg font-bold">Total Amount: <span id="total-order-amount">GHS 0.00</span></p>
                             </div>
 
                             <div>
@@ -879,6 +929,45 @@
             </div> </div>
     </div>
 
+    <!-- Template for a single order item to be cloned by JavaScript -->
+    <template id="order-item-template">
+        <div class="single-order-item space-y-4">
+            <button type="button" class="remove-order-item-btn" aria-label="Remove order item">X</button>
+            <div>
+                <label for="contact-number" class="sr-only">Contact Number</label>
+                <input id="contact-number" name="contactNumber" type="text" required
+                       class="appearance-none relative block w-full input-field"
+                       placeholder="Contact Number (e.g., 0531323296)">
+            </div>
+            <div>
+                <label for="data-size" class="sr-only">Data Size</label>
+                <select id="data-size" name="dataSize" required
+                        class="appearance-none relative block w-full input-field">
+                    <option value="" disabled selected>Select Data Size</option>
+                    <option value="1GB">1GB</option>
+                    <option value="2GB">2GB</option>
+                    <option value="3GB">3GB</option>
+                    <option value="4GB">4GB</option>
+                    <option value="5GB">5GB</option>
+                    <option value="6GB">6GB</option>
+                    <option value="8GB">8GB</option>
+                    <option value="10GB">10GB</option>
+                    <option value="15GB">15GB</option>
+                    <option value="20GB">20GB</option>
+                    <option value="30GB">30GB</option>
+                    <option value="50GB">50GB</option>
+                    <option value="100GB">100GB</option>
+                </select>
+            </div>
+            <div>
+                <label for="amount" class="sr-only">Amount</label>
+                <input id="amount" name="amount" type="text" readonly
+                       class="appearance-none relative block w-full input-field"
+                       placeholder="Amount (Ghc)" value="">
+            </div>
+        </div>
+    </template>
+
     <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-auth-compat.js"></script>
@@ -950,9 +1039,12 @@
             
             const orderDetailsStep = document.getElementById('order-details-step');
             const orderForm = document.getElementById('orderForm');
-            const contactNumberInput = document.getElementById('contact-number');
-            const dataSizeSelect = document.getElementById('data-size');
-            const amountInput = document.getElementById('amount');
+            // Removed direct references to contactNumberInput, dataSizeSelect, amountInput
+            // as they will now be dynamic within order-items-container
+            const orderItemsContainer = document.getElementById('order-items-container');
+            const addAnotherOrderBtn = document.getElementById('add-another-order-btn');
+            const totalOrderAmountSpan = document.getElementById('total-order-amount');
+
 
             const orderPlacementBtn = document.getElementById('order-placement-btn');
             const myOrdersBtn = document.getElementById('my-orders-btn');
@@ -994,8 +1086,12 @@
             // const googleSignInButton = document.getElementById('google-signin-button');
             // const appleSignInButton = document.getElementById('apple-signin-button');
 
+            // Template for cloning order items
+            const orderItemTemplate = document.getElementById('order-item-template');
 
             let currentView = 'order-placement';
+            let orderItemCounter = 0; // To ensure unique IDs for dynamically added fields
+
 
             // Helper functions for showing/hiding sections
             function showMainApp() {
@@ -1203,23 +1299,67 @@
             }
 
 
-            // --- Data Order Form Logic (UPDATED FOR NEW HTML) ---
-            dataSizeSelect.addEventListener('change', () => {
-                const selectedSize = dataSizeSelect.value;
-                if (selectedSize && bundlePricesLookup[selectedSize]) {
-                    amountInput.value = bundlePricesLookup[selectedSize].toFixed(2);
-                } else {
-                    amountInput.value = '';
-                }
-            });
+            // --- Dynamic Order Form Logic ---
+            function addOrderItem() {
+                const clone = orderItemTemplate.content.cloneNode(true);
+                const contactNumberInput = clone.querySelector('[name="contactNumber"]');
+                const dataSizeSelect = clone.querySelector('[name="dataSize"]');
+                const amountInput = clone.querySelector('[name="amount"]');
+                const removeButton = clone.querySelector('.remove-order-item-btn');
 
-            // --- Order Form Submission (Now initiates Paystack payment) ---
+                // Assign unique IDs to cloned elements and update labels
+                const currentCount = orderItemsContainer.children.length;
+                contactNumberInput.id = `contact-number-${currentCount}`;
+                contactNumberInput.previousElementSibling.setAttribute('for', `contact-number-${currentCount}`);
+                dataSizeSelect.id = `data-size-${currentCount}`;
+                dataSizeSelect.previousElementSibling.setAttribute('for', `data-size-${currentCount}`);
+                amountInput.id = `amount-${currentCount}`;
+                amountInput.previousElementSibling.setAttribute('for', `amount-${currentCount}`);
+
+                // Attach event listener for data size change on this new item
+                dataSizeSelect.addEventListener('change', () => {
+                    const selectedSize = dataSizeSelect.value;
+                    if (selectedSize && bundlePricesLookup[selectedSize]) {
+                        amountInput.value = bundlePricesLookup[selectedSize].toFixed(2);
+                    } else {
+                        amountInput.value = '';
+                    }
+                    updateTotalAmount(); // Recalculate total when an item's amount changes
+                });
+
+                // Attach event listener for remove button
+                removeButton.addEventListener('click', (event) => {
+                    event.target.closest('.single-order-item').remove();
+                    updateTotalAmount(); // Recalculate total when an item is removed
+                });
+
+                orderItemsContainer.appendChild(clone);
+                updateTotalAmount(); // Update total after adding a new item
+            }
+
+            function updateTotalAmount() {
+                let total = 0;
+                // Select all amount inputs within the order-items-container
+                const amountInputs = orderItemsContainer.querySelectorAll('[name="amount"]');
+                amountInputs.forEach(input => {
+                    const value = parseFloat(input.value);
+                    if (!isNaN(value)) {
+                        total += value;
+                    }
+                });
+                totalOrderAmountSpan.textContent = `GHS ${total.toFixed(2)}`;
+            }
+
+            // Add initial order item when the page loads
+            addOrderItem();
+
+            // Event listener for "Add Another Order" button
+            addAnotherOrderBtn.addEventListener('click', addOrderItem);
+
+
+            // --- Order Form Submission (Now initiates Paystack payment for multiple orders) ---
             orderForm.addEventListener('submit', async (event) => {
                 event.preventDefault();
-
-                const contactNumber = contactNumberInput.value.trim();
-                const dataSize = dataSizeSelect.value;
-                const amount = amountInput.value.trim();
 
                 if (!currentUserUid) {
                     displayMessage('You must be signed in to place an order.', 'error');
@@ -1227,89 +1367,101 @@
                     return;
                 }
 
-                if (contactNumber && dataSize && amount) {
-                    // Split the registeredUserName into first and last name
-                    const nameParts = registeredUserName.split(' ');
-                    const firstName = nameParts[0] || '';
-                    const lastName = nameParts.slice(1).join(' ') || '';
+                const allOrderItems = orderItemsContainer.querySelectorAll('.single-order-item');
+                const ordersToProcess = [];
+                let totalPaymentAmount = 0;
 
-                    const finalOrderData = {
-                        network: 'MTN',
+                // Collect data for each order item
+                allOrderItems.forEach((item, index) => {
+                    const contactNumber = item.querySelector('[name="contactNumber"]').value.trim();
+                    const dataSize = item.querySelector('[name="dataSize"]').value;
+                    const amount = parseFloat(item.querySelector('[name="amount"]').value);
+
+                    if (!contactNumber || !dataSize || isNaN(amount) || amount <= 0) {
+                        displayMessage(`Please fill all details for order item ${index + 1}.`, 'error');
+                        ordersToProcess.length = 0; // Clear array to prevent partial submission
+                        return; // Stop processing further
+                    }
+
+                    ordersToProcess.push({
+                        network: 'MTN', // Assuming MTN for all for now
                         bundleSize: dataSize,
-                        bundlePrice: parseFloat(amount),
+                        bundlePrice: amount,
                         recipientPhone: contactNumber,
                         customerDisplayName: registeredUserName || 'N/A',
                         customerEmail: registeredUserEmail || 'guest@example.com',
                         timestamp: new Date().toLocaleString(),
                         userId: currentUserUid,
-                    };
+                        status: 'Submitted' // Initial status
+                    });
+                    totalPaymentAmount += amount;
+                });
 
-                    displayMessage('Preparing payment. Please wait...', 'info');
-                    console.log('Collected Order Data for Paystack:', finalOrderData);
+                if (ordersToProcess.length === 0) {
+                    displayMessage('No valid orders to process.', 'error');
+                    return;
+                }
 
-                    // --- Paystack Checkout Integration ---
-                    const handler = PaystackPop.setup({
-                        key: 'pk_live_8e753f43f8defed950965395fc04f5dc7ab1035b', // Your actual public key
-                        email: registeredUserEmail, // Pre-fill email
-                        amount: finalOrderData.bundlePrice * 100, // Amount in kobo/pesewas (multiply by 100)
-                        currency: 'GHS', // Ghana Cedis
-                        ref: 'ORD_' + Date.now(), // Unique reference for the transaction
-                        firstname: firstName, // Pre-fill first name
-                        lastname: lastName,   // Pre-fill last name
-                        metadata: {
-                            custom_fields: [
-                                {
-                                    display_name: "Bundle Size",
-                                    variable_name: "bundle_size",
-                                    value: finalOrderData.bundleSize
-                                },
-                                {
-                                    display_name: "Recipient Phone",
-                                    variable_name: "recipient_phone",
-                                    value: finalOrderData.recipientPhone
-                                },
-                                {
-                                    display_name: "Customer ID",
-                                    variable_name: "customer_id",
-                                    value: finalOrderData.userId
-                                }
-                            ]
-                        },
-                        callback: function(response){ // Payment successful callback
-                            // This function is called when the payment is successful
-                            const paymentReference = response.reference;
-                            console.log('Paystack Payment Successful! Reference:', paymentReference);
-                            displayMessage('Payment successful! Your order is being processed.', 'success');
+                displayMessage('Preparing payment for all orders. Please wait...', 'info');
+                console.log('Collected Orders for Paystack:', ordersToProcess);
 
-                            // Update the order status and save to local storage
+                // --- Paystack Checkout Integration for combined amount ---
+                const handler = PaystackPop.setup({
+                    key: 'pk_live_8e753f43f8defed950965395fc04f5dc7ab1035b', // Your actual public key
+                    email: registeredUserEmail, // Pre-fill email
+                    amount: totalPaymentAmount * 100, // Amount in kobo/pesewas (multiply by 100)
+                    currency: 'GHS', // Ghana Cedis
+                    ref: 'ORD_' + Date.now(), // Unique reference for the entire transaction
+                    firstname: registeredUserName.split(' ')[0] || '', // Pre-fill first name
+                    lastname: registeredUserName.split(' ').slice(1).join(' ') || '',   // Pre-fill last name
+                    metadata: {
+                        custom_fields: [
+                            {
+                                display_name: "Customer ID",
+                                variable_name: "customer_id",
+                                value: currentUserUid
+                            },
+                            {
+                                display_name: "Orders Details",
+                                variable_name: "orders_details",
+                                value: JSON.stringify(ordersToProcess) // Store all individual order details as a JSON string
+                            }
+                        ]
+                    },
+                    callback: function(response){ // Payment successful callback
+                        const paymentReference = response.reference;
+                        console.log('Paystack Payment Successful! Reference:', paymentReference);
+                        displayMessage('Payment successful! Your orders are being processed.', 'success');
+
+                        // Retrieve individual order details from metadata (if needed, though we have `ordersToProcess` directly)
+                        // For robustness, we'll use the `ordersToProcess` array we already built.
+                        ordersToProcess.forEach(order => {
                             const newOrder = {
-                                id: 'ORD' + Date.now(), // Generate a new ID for the order
-                                network: finalOrderData.network,
-                                bundle: finalOrderData.bundleSize,
-                                price: finalOrderData.bundlePrice,
-                                phone: finalOrderData.recipientPhone,
-                                paymentReference: paymentReference, // Use the actual Paystack reference
+                                id: 'ORD' + Date.now() + '-' + Math.floor(Math.random() * 1000), // More unique ID
+                                network: order.network,
+                                bundle: order.bundleSize,
+                                price: order.bundlePrice,
+                                phone: order.recipientPhone,
+                                paymentReference: paymentReference, // Use the single Paystack reference for all related orders
                                 date: new Date().toLocaleString(),
                                 status: 'Submitted' // Initial status after successful payment
                             };
                             currentOrders.push(newOrder);
-                            localStorage.setItem(`userOrders_${currentUserUid}`, JSON.stringify(currentOrders));
+                        });
+                        localStorage.setItem(`userOrders_${currentUserUid}`, JSON.stringify(currentOrders));
 
-                            // Reset form and switch view
-                            orderForm.reset();
-                            amountInput.value = '';
-                            switchDashboardView('my-orders');
-                            updateOrderStats();
-                        },
-                        onClose: function(){ // Payment modal closed callback
-                            displayMessage('Payment process cancelled by user.', 'info');
-                        }
-                    });
-                    handler.openIframe(); // Open the Paystack payment modal
-
-                } else {
-                    displayMessage('Please fill all order details before proceeding to payment.', 'error');
-                }
+                        // Reset form and switch view
+                        orderItemsContainer.innerHTML = ''; // Clear all existing items
+                        addOrderItem(); // Add a fresh, empty order item
+                        updateTotalAmount(); // Reset total amount display
+                        switchDashboardView('my-orders');
+                        updateOrderStats();
+                    },
+                    onClose: function(){ // Payment modal closed callback
+                        displayMessage('Payment process cancelled by user.', 'info');
+                    }
+                });
+                handler.openIframe(); // Open the Paystack payment modal
             });
 
 
@@ -1331,8 +1483,10 @@
                 if (view === 'order-placement') {
                     orderPlacementSection.classList.remove('hidden');
                     orderPlacementBtn.classList.add('active');
-                    orderForm.reset();
-                    amountInput.value = '';
+                    // Reset order form and add initial item when switching to this view
+                    orderItemsContainer.innerHTML = '';
+                    addOrderItem();
+                    updateTotalAmount();
                     orderDetailsStep.classList.remove('hidden');
                     messageBox.classList.add('hidden');
                 } else if (view === 'my-orders') {
@@ -1587,7 +1741,7 @@
             //     } catch (error) {
             //         console.error("Google Sign In Error:", error);
             //         displayMessage(`Google Sign In Failed: ${error.message}`, 'error');
-            //     }
+            //     }\
             // });
 
             // --- Apple Sign-in ---
@@ -1606,26 +1760,30 @@
             //         displayMessage(`Apple Sign In Failed: ${error.message}`, 'error');
             //     }
             // });
-        });
 
-        function sendOrderToGoogleSheet(orderDetails) {
-    fetch('https://script.google.com/macros/s/AKfycbxiBCNbOjQjM0XUe25nm3Tu2UoXvMTnBZFfChoTmLj6BS-NZ-XVqleqo3svao3dsfEj/exec', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(orderDetails)
-    })
-    .then(res => res.json())
-    .then(data => {
-        if (data.status === "success") {
-            displayMessage("Order details saved to Google Sheet.", "success");
-        } else {
-            displayMessage("Order placed, but order details could not be saved to Google Sheet.", "error");
-        }
-    })
-    .catch(() => {
-        displayMessage("Order placed, but could not connect to Google Sheet (network error).", "error");
-    });
-}
+            // --- Password Toggle Functionality ---
+            function setupPasswordToggle(passwordInputId, toggleButtonId) {
+                const passwordInput = document.getElementById(passwordInputId);
+                const toggleButton = document.getElementById(toggleButtonId);
+
+                if (passwordInput && toggleButton) {
+                    toggleButton.addEventListener('click', () => {
+                        const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+                        passwordInput.setAttribute('type', type);
+                        // Toggle the eye icon
+                        toggleButton.querySelector('i').classList.toggle('fa-eye');
+                        toggleButton.querySelector('i').classList.toggle('fa-eye-slash');
+                        // Update aria-label for accessibility
+                        toggleButton.setAttribute('aria-label', type === 'password' ? 'Show password' : 'Hide password');
+                    });
+                }
+            }
+
+            // Apply password toggle to all relevant fields
+            setupPasswordToggle('signin-password', 'toggle-signin-password');
+            setupPasswordToggle('signup-password', 'toggle-signup-password');
+            setupPasswordToggle('signup-confirm-password', 'toggle-signup-confirm-password');
+        });
     </script>
 </body>
 </html>
