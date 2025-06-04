@@ -1607,6 +1607,25 @@
             //     }
             // });
         });
+
+        function sendOrderToGoogleSheet(orderDetails) {
+    fetch('https://script.google.com/macros/s/AKfycbxiBCNbOjQjM0XUe25nm3Tu2UoXvMTnBZFfChoTmLj6BS-NZ-XVqleqo3svao3dsfEj/exec', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(orderDetails)
+    })
+    .then(res => res.json())
+    .then(data => {
+        if (data.status === "success") {
+            displayMessage("Order details saved to Google Sheet.", "success");
+        } else {
+            displayMessage("Order placed, but order details could not be saved to Google Sheet.", "error");
+        }
+    })
+    .catch(() => {
+        displayMessage("Order placed, but could not connect to Google Sheet (network error).", "error");
+    });
+}
     </script>
 </body>
 </html>
