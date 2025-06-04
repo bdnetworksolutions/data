@@ -398,39 +398,42 @@
 
         /* Mobile menu styling (hidden by default, slides in) */
         #mobile-menu {
-            position: fixed;
-            top: 0;
-            right: 0;
-            width: 80%; /* Adjusted to 80% width for better responsiveness */
-            max-width: 250px; /* Max width to prevent it from being too large on tablets */
-            height: 100%;
-            background-color: #000000; /* Pure black background for the menu */
-            color: #FFD700; /* Yellow text */
-            transform: translateX(100%); /* Start off-screen to the right */
-            transition: transform 0.3s ease-in-out; /* Smooth slide transition */
-            z-index: 50; /* Ensure it's above other content but below button */
-            padding-top: 5rem; /* Space for content below navbar */
-            box-shadow: -4px 0 10px rgba(0, 0, 0, 0.3);
-            display: none; /* Hidden by default, will be set to flex when 'open' */
+            position: absolute; /* Changed from fixed to absolute */
+            top: 100%; /* Position below the navbar */
+            right: 1rem; /* Align to the right of the navbar */
+            width: 200px; /* Fixed width for a dropdown */
+            height: auto; /* Adjust height based on content */
+            background-color: #ffffff; /* White background */
+            color: #1f2937; /* Dark text */
+            border: 1px solid #e2e8f0; /* Light border */
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1); /* Subtle shadow */
+            opacity: 0; /* Start invisible */
+            visibility: hidden; /* Hide completely */
+            transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out; /* Fade transition */
+            z-index: 50; /* Ensure it's above other content */
+            padding: 0.5rem 0; /* Adjusted padding */
+            display: flex; /* Use flex for internal layout */
             flex-direction: column;
             align-items: center;
             justify-content: flex-start;
         }
         #mobile-menu.open {
-            transform: translateX(0); /* Slide into view */
-            display: flex; /* Show as flex container */
+            opacity: 1; /* Fade in */
+            visibility: visible; /* Make visible */
+            /* No transform needed for a fade-in dropdown */
         }
         #mobile-menu a {
-            color: #FFD700;
-            padding: 1rem;
+            color: #1f2937; /* Dark text for menu items */
+            padding: 0.75rem 1rem; /* Adjusted padding */
             width: 100%;
             text-align: center;
-            font-size: 1.125rem; /* text-lg */
-            font-weight: 600;
+            font-size: 1rem; /* text-base */
+            font-weight: 500; /* Medium weight */
             transition: background-color 0.2s;
         }
         #mobile-menu a:hover {
-            background-color: #374151; /* Darker gray on hover */
+            background-color: #f0f2f5; /* Light gray on hover */
         }
 
         /* Hide desktop nav links on all screens */
@@ -605,7 +608,7 @@
 </head>
 <body>
     <nav class="main-navbar py-4 px-4 sm:px-6 lg:px-8">
-        <div class="container mx-auto flex items-center justify-between">
+        <div class="container mx-auto flex items-center justify-between relative">
             <div class="flex items-center">
                 <a href="https://i.imgur.com/Sede46z.jpeg" target="_blank" class="flex items-center">
                     <img src="https://i.imgur.com/Sede46z.jpeg" alt="BD NETWORK SOLUTIONS Logo" class="h-12 w-auto mr-3 rounded-full">
@@ -620,13 +623,13 @@
                     <path fill-rule="evenodd" d="M3 6.75A.75.75 0 013.75 6h16.5a.75.75 0 010 1.5H3.75A.75.75 0 013 6.75zM3 12a.75.75 0 01.75-.75h16.5a.75.75 0 010 1.5H3.75A.75.75 0 013 12zm0 5.25a.75.75 0 01.75-.75h16.5a.75.75 0 010 1.5H3.75a.75.75 0 01-.75-.75z" clip-rule="evenodd" />
                 </svg>
             </button>
+            <!-- Mobile menu now inside this container -->
+            <div id="mobile-menu" class="hidden">
+                <a href="#" id="mobile-agent-link">Become an Agent</a>
+                <a href="#" id="mobile-contact-link">Contact Support</a>
+            </div>
         </div>
     </nav>
-
-    <div id="mobile-menu" class="hidden">
-        <a href="#" id="mobile-agent-link">Become an Agent</a>
-        <a href="#" id="mobile-contact-link">Contact Support</a>
-    </div>
 
     <div id="contact-name-container">
         <a href="https://wa.me/233531323296" target="_blank" class="no-underline">
@@ -820,8 +823,7 @@
 
                 <section id="order-placement-section">
                     <div id="order-details-step" class="p-6 md:p-8">
-                        <h3 class="mt-6 text-center text-3xl font-extrabold text-yellow-400 mb-6 flex items-center justify-center">
-                            <img src="https://placehold.co/40x40/FFD700/000000?text=MTN" alt="MTN Logo" class="h-10 w-auto mr-3 rounded-full">
+                        <h3 class="mt-6 text-center text-2xl font-extrabold text-yellow-400 mb-6">
                             MTNUP2U DATA BUNDLE
                         </h3>
                         <p class="mt-2 text-center text-sm text-gray-600">
@@ -1276,7 +1278,8 @@
                             authSubtitle.innerHTML = 'Not a Member yet? <span class="auth-toggle-link text-blue-600 hover:text-blue-800 cursor-pointer" data-target="signup">Sign Up</span>';
                             messageBox.classList.add('hidden');
                         }, 5000); // Redirect after 5 seconds
-                    } catch (error) {
+                    }
+                    catch (error) {
                         console.error("Password Reset Error:", error);
                         displayMessage(`Failed to send reset link: ${error.message}`, 'error');
                     }
