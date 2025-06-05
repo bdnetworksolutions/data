@@ -17,36 +17,32 @@
             font-family: 'Inter', sans-serif;
             margin: 0;
             padding: 0;
-            color: #1a202c; /* Deeper dark gray for body text - nearly black for strong contrast */
-            background-color: #f8fafc; /* Lighter off-white background for softness */
-            line-height: 1.6; /* Improved readability for body text */
+            color: #1f2937; /* Dark gray text */
         }
 
         /* Main navigation bar styling */
         .main-navbar {
             background-color: #FFD700; /* MTN Yellow */
-            color: #1a202c; /* Dark text for contrast */
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15); /* More pronounced, yet soft shadow */
+            color: #1f2937; /* Dark text for contrast */
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow */
             position: relative; /* Needed for absolute positioning of mobile menu */
             z-index: 40; /* Ensure navbar is above other content */
-            padding-top: 1rem; /* Slightly more padding */
-            padding-bottom: 1rem; /* Slightly more padding */
         }
 
-        /* Logo text styling */
+        /* Logo text styling - Reduced size */
         .main-navbar .logo-text {
-            color: #1a202c; /* Dark text for brand name on yellow background */
-            font-size: 1.45rem; /* Slightly larger for prominence */
+            color: #1f2937; /* Dark text for brand name on yellow background */
+            font-size: 1.3rem; /* Slightly reduced again for more compactness */
             font-weight: 800; /* Extra bold */
             white-space: nowrap; /* Prevent wrapping */
         }
 
-        /* Slogan text styling - Adjusted margin and color */
+        /* Slogan text styling - Adjusted margin */
         .main-navbar .slogan-text {
-            color: #4a5568; /* Subtle gray for contrast with main logo text */
-            font-size: 0.7rem; /* Slightly larger */
+            color: #374151; /* A slightly darker gray for subtlety */
+            font-size: 0.6rem; /* Slightly smaller for better fit */
             font-weight: 500; /* Medium weight */
-            margin-top: 0.1rem; /* Adjusted to visually separate slightly */
+            margin-top: -0.1rem; /* Pull it slightly closer to the main text */
             white-space: nowrap; /* Prevent wrapping */
         }
 
@@ -55,11 +51,11 @@
             background-image: url('https://i.imgur.com/7bSulGO.jpeg'); /* Background image */
             background-size: cover; /* Cover the entire area */
             background-position: center; /* Center the background image */
-            min-height: 90vh; /* Slightly reduced for better flow on smaller screens */
+            min-height: 100vh; /* Adjusted to 100vh for better mobile adaptability */
             display: flex;
             align-items: center; /* Center content vertically */
             position: relative; /* Needed for overlay */
-            padding: 4rem 0; /* Consistent vertical padding */
+            padding: 2rem 0; /* Vertical padding */
         }
 
         /* Hero overlay for text readability */
@@ -69,7 +65,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.6); /* Slightly darker overlay for better text contrast */
+            background: rgba(0, 0, 0, 0.5); /* Semi-transparent black overlay */
             z-index: 1;
         }
 
@@ -83,25 +79,23 @@
             align-items: center; /* Center items on small screens */
             justify-content: center; /* Distribute space */
             width: 100%;
-            padding: 0 1.5rem; /* Default horizontal padding for mobile */
         }
 
         /* Media query for medium screens and up to arrange hero content side-by-side */
         @media (min-width: 768px) {
             .hero-content-wrapper {
                 flex-direction: row;
-                align-items: center; /* Align to the center of the flex container */
+                align-items: flex-start; /* Align to the top of the flex container */
                 justify-content: space-around; /* Adjust spacing */
-                padding: 0 4rem; /* More generous horizontal padding on desktop */
+                padding: 0 2rem; /* Horizontal padding */
             }
         }
 
         /* Hero text content styling */
         .hero-text-content {
             text-align: center; /* Center text on small screens */
-            margin-bottom: 3rem; /* More space between text and card on small screens */
+            margin-bottom: 2rem; /* Space between text and card on small screens */
             width: 100%; /* Full width on small screens */
-            max-width: 550px; /* Constrain width for readability */
         }
 
         /* Media query for medium screens and up for hero text alignment */
@@ -115,55 +109,57 @@
 
         /* Adjusted H1 font size for hero section */
         .hero-text-content h1 {
-            font-size: 2.25rem; /* Larger for better impact on mobile */
+            font-size: 2rem; /* Reduced from 2.25rem for better mobile fit */
             font-weight: 800; /* Extra bold */
-            line-height: 1.25; /* Slightly increased line height */
+            line-height: 1.2;
             margin-bottom: 1rem;
+            max-width: 500px; /* Constrain width for readability */
             margin-left: auto; /* Center on small screens */
             margin-right: auto; /* Center on small screens */
-            text-shadow: 1px 1px 3px rgba(0,0,0,0.3); /* Subtle text shadow for depth */
         }
 
         /* Media query for larger screens for H1 font size */
         @media (min-width: 768px) {
             .hero-text-content h1 {
-                font-size: 3.75rem; /* Larger for desktop impact */
+                font-size: 3.25rem; /* Slightly reduced from 3.5rem for desktop */
                 margin-left: 0;
                 margin-right: 0;
             }
         }
-        .hero-text-content p {
-            font-size: 1.15rem; /* Slightly larger body text in hero */
-            opacity: 0.9; /* Slightly transparent for depth */
-        }
 
-        /* Blended Card Styling (for auth section) */
+        /* Blended Card Styling - Adjusted for better visibility (for auth section) */
         .card {
-            background-color: rgba(255, 255, 255, 0.95); /* Nearly opaque white for professionalism */
-            backdrop-filter: blur(8px); /* Increased blur effect */
-            -webkit-backdrop-filter: blur(8px); /* Safari support */
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3); /* Stronger, softer shadow */
-            border-radius: 16px; /* More rounded corners */
-            padding: 3rem; /* More generous padding inside the card */
-            color: #1a202c; /* Dark text for better contrast */
-            border: 1px solid rgba(255, 255, 255, 0.8); /* More visible white border */
+            background-color: rgba(255, 255, 255, 0.85); /* 85% transparent white */
+            backdrop-filter: blur(6px); /* Blur effect */
+            -webkit-backdrop-filter: blur(6px); /* Safari support */
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.5); /* Stronger shadow */
+            border-radius: 12px;
+            padding: 2.5rem;
+            color: #1f2937; /* Dark text for better contrast */
+            border: 1px solid rgba(255, 255, 255, 0.7); /* More visible white border */
             width: 100%;
-            max-width: 480px; /* Slightly wider max-width for balance */
+            max-width: 448px; /* Max width for the card */
         }
 
-        /* Input field styling */
+        /* Media query for medium screens and up for card width */
+        @media (min-width: 768px) {
+            .card {
+                width: 45%;
+            }
+        }
+
+        /* Input field styling for better visibility and spacing */
         .input-field {
             background-color: #ffffff; /* Solid white background */
-            border: 1px solid #d1d5db; /* A slightly darker gray for borders */
-            color: #1a202c; /* Dark text */
-            padding: 0.85rem 1.15rem; /* Increased padding */
-            border-radius: 0.65rem; /* More rounded corners */
-            transition: border-color 0.2s, box-shadow 0.2s;
+            border: 1px solid #cbd5e1; /* Light gray border */
+            color: #1f2937; /* Dark text */
+            padding: 0.75rem 1rem; /* Added more padding */
+            border-radius: 0.5rem; /* Increased border-radius to 0.5rem */
+            /* Removed margin-bottom here to use space-y on parent for better control */
         }
         .input-field:focus {
-            border-color: #FFC000; /* Richer yellow border on focus */
-            box-shadow: 0 0 0 4px rgba(255, 192, 0, 0.3); /* Softer, wider yellow glow on focus */
-            outline: none; /* Remove default outline */
+            border-color: #FFD700; /* Yellow border on focus */
+            box-shadow: 0 0 0 3px rgba(255, 215, 0, 0.4); /* Yellow glow on focus */
         }
         /* Message box styling */
         .message-box {
@@ -172,66 +168,61 @@
             text-align: center;
             margin-top: 1rem;
             font-weight: 500;
-            opacity: 0.95; /* Slightly less opaque */
         }
         .message-box.info {
-            background-color: #e0f7fa; /* Lighter cyan */
-            color: #00796b; /* Darker cyan */
-            border: 1px solid #80deea;
+            background-color: #e0f2fe;
+            color: #0c4a6e;
+            border: 1px solid #90cdf4;
         }
         .message-box.success {
-            background-color: #e8f5e9; /* Lighter green */
-            color: #2e7d32; /* Darker green */
-            border: 1px solid #a5d6a7;
+            background-color: #fffbeb;
+            color: #92400e;
+            border: 1px solid #fcd34d;
         }
         .message-box.error {
-            background-color: #ffebee; /* Lighter red */
-            color: #c62828; /* Darker red */
-            border-color: #ef9a9a;
+            background-color: #fee2e2;
+            color: #991b1b;
+            border-color: #fca5a5;
         }
 
-        /* User info bar styling (dashboard) */
+        /* User info bar styling */
         .user-info-bar {
-            background-color: #263238; /* Dark slate gray */
+            background-color: #2d3748; /* Dark background as seen in the image */
             color: #FFD700; /* MTN Yellow for text */
-            padding: 1rem 2rem; /* More generous padding */
-            border-radius: 10px; /* Slightly more rounded corners */
+            padding: 0.8rem 1.5rem; /* Adjusted padding for a fuller bar */
+            border-radius: 8px; /* Rounded corners */
             display: flex; /* Use flexbox for alignment */
             flex-direction: row; /* Arrange items horizontally */
             align-items: center; /* Vertically center items */
             justify-content: space-between; /* Space between user display and button */
             font-weight: 600;
-            margin-bottom: 2.5rem; /* More space below the user info bar */
+            margin-bottom: 2rem; /* Space below the user info bar */
             width: 100%; /* Ensure it spans the full width of its parent */
-            box-shadow: 0 4px 12px rgba(0,0,0,0.2); /* Subtle shadow */
         }
 
         #user-display {
-            font-size: 1.2rem; /* Larger font for welcome message */
+            font-size: 1.1rem; /* Slightly larger font for welcome message */
             font-weight: 700; /* Bold */
             color: #FFD700; /* Yellow text for welcome message */
             white-space: nowrap; /* Prevent wrapping for the name */
             overflow: hidden; /* Hide overflow if name is too long */
             text-overflow: ellipsis; /* Add ellipsis for long names */
-            margin-right: 1.5rem; /* More space between text and button */
+            margin-right: 1rem; /* Space between text and button */
         }
 
         .user-info-bar button {
             background-color: #FFD700; /* MTN Yellow for sign out button */
-            color: #1a202c; /* Dark text for contrast on yellow */
-            padding: 0.75rem 1.5rem; /* Padding for the button */
-            border-radius: 8px; /* More rounded */
-            font-weight: 700; /* Bolder */
-            transition: background-color 0.2s, transform 0.1s, box-shadow 0.2s;
+            color: #1f2937; /* Dark text for contrast on yellow */
+            padding: 0.6rem 1.2rem; /* Padding for the button */
+            border-radius: 6px;
+            font-weight: 600;
+            transition: background-color 0.2s, color 0.2s;
             border: none; /* Remove default button border */
             cursor: pointer;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* Subtle button shadow */
         }
         .user-info-bar button:hover {
             background-color: #FFC000; /* Slightly darker yellow on hover */
             color: #000000; /* Black text on hover for more contrast */
-            transform: translateY(-1px); /* Slight lift effect */
-            box-shadow: 0 4px 8px rgba(0,0,0,0.15); /* Enhanced shadow on hover */
         }
 
         /* Adjust for small screens if needed */
@@ -243,41 +234,36 @@
             }
             #user-display {
                 margin-right: 0;
-                margin-bottom: 0.75rem; /* More space between name and button */
+                margin-bottom: 0.5rem; /* Space between name and button */
                 text-align: left;
                 width: 100%;
             }
             .user-info-bar button {
-                width: 100%; /* Full width button on mobile */
-                align-self: center; /* Center button */
+                width: auto; /* Allow button to size naturally */
+                align-self: flex-end; /* Align button to the right */
             }
         }
 
         /* Adjust specific text/elements inside the card */
         #auth-title, #main-app-section h2, #order-details-step h3 {
-            color: #1a202c; /* Headings to dark, consistent */
+            color: #1f2937; /* Headings to dark */
             text-shadow: none;
-            font-weight: 800; /* Ensure headings are extra bold */
         }
         #auth-subtitle, .text-gray-600 {
-            color: #64748b; /* A slightly darker gray for better readability */
+            color: #4a5568; /* Standard gray for readability */
         }
 
         /* Payment account details styling */
         .payment-account {
-            background-color: #f0f4f8; /* Light blue-gray background */
-            border: 1px solid #e2e8f0;
-            color: #1a202c; /* Dark text */
-            padding: 1.25rem; /* More padding */
-            border-radius: 0.75rem; /* More rounded corners */
-            box-shadow: 0 2px 8px rgba(0,0,0,0.08); /* Slightly more visible shadow */
-            transition: transform 0.2s ease-in-out;
-        }
-        .payment-account:hover {
-            transform: translateY(-2px); /* Subtle lift on hover */
+            background-color: #f9fafb; /* Light background */
+            border: 1px solid #e5e7eb;
+            color: #1f2937; /* Dark text */
+            padding: 1rem; /* Added padding */
+            border-radius: 0.5rem; /* Rounded corners */
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1); /* Subtle shadow */
         }
         .payment-account strong, .payment-account p {
-            color: #1a202c; /* Dark text */
+            color: #1f2937; /* Dark text */
         }
         .payment-account img {
             height: auto;
@@ -289,121 +275,112 @@
             border-radius: 0;
         }
 
-        /* Agent Message Display styling (for floating box) */
+        /* Contact name display styling */
+        #contact-name-container {
+            background-color: #1a202c; /* Dark background */
+            color: #FFD700; /* MTN Yellow text */
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            font-weight: bold;
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none; /* Prevents interaction when hidden */
+            transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
+            cursor: pointer;
+            position: absolute; /* Position absolutely */
+            top: 5rem; /* Below the nav bar */
+            right: 1.5rem; /* Align with right edge */
+            z-index: 30; /* Ensure it's above other content */
+        }
+        #contact-name-container.show {
+            opacity: 1;
+            visibility: visible;
+            pointer-events: auto; /* Enables interaction when shown */
+        }
+        #contact-name-container:hover {
+            background-color: #2d3748;
+            color: #FFC000;
+        }
+
+        /* Agent Message Display styling */
         #agent-message-container {
-            background-color: #fffde7; /* Very light yellow */
-            color: #8d6e63; /* Soft brown */
-            padding: 1rem 1.5rem; /* More padding */
-            border-radius: 10px;
+            background-color: #fffbeb; /* Light yellow background */
+            color: #92400e; /* Dark brown text */
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
             font-size: 0.95rem;
             font-weight: 500;
             opacity: 0;
             visibility: hidden;
-            pointer-events: none;
-            transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out, transform 0.2s ease-in-out;
-            max-width: 380px; /* Slightly wider */
+            pointer-events: none; /* Prevents interaction when hidden */
+            transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
+            max-width: 350px;
             text-align: center;
-            border: 1px solid #ffcc80; /* Soft orange border */
+            border: 1px solid #fcd34d;
             position: absolute; /* Position absolutely */
-            top: 5.5rem; /* Below the nav bar with more clearance */
+            top: 5rem; /* Below the nav bar */
             right: 1.5rem; /* Align with right edge */
-            z-index: 30;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            z-index: 30; /* Ensure it's above other content */
         }
         #agent-message-container.show {
             opacity: 1;
             visibility: visible;
-            pointer-events: auto;
-            transform: translateY(0);
+            pointer-events: auto; /* Enables interaction when shown */
         }
-        #agent-message-container a {
-            color: #007bff; /* Standard blue for links */
-            font-weight: 700;
-            text-decoration: underline;
-        }
-        #agent-message-container a:hover {
-            color: #0056b3;
-        }
-
 
         /* Styles for the new dashboard navigation buttons */
         .dashboard-nav-buttons button {
             background-color: #FFD700;
-            color: #1a202c; /* Dark text */
-            padding: 0.9rem 1.8rem; /* More generous padding */
-            border-radius: 10px; /* More rounded */
+            color: #1f2937;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
             font-weight: 700;
-            transition: background-color 0.2s ease-in-out, transform 0.1s ease-in-out, box-shadow 0.2s;
+            transition: background-color 0.2s ease-in-out, transform 0.1s ease-in-out;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
             display: flex; /* Make buttons flexible for icons */
             align-items: center;
-            gap: 0.75rem; /* More space between icon and text */
-            font-size: 1.05rem; /* Slightly larger font */
-            min-width: 160px; /* Ensure a minimum width for consistency */
-            justify-content: center; /* Center content within buttons */
+            gap: 0.5rem;
         }
         .dashboard-nav-buttons button:hover {
             background-color: #FFC000;
             transform: translateY(-2px);
-            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.25);
         }
         .dashboard-nav-buttons button.active {
-            background-color: #1a202c; /* Dark background for active button */
+            background-color: #1f2937; /* Dark background for active button */
             color: #FFD700; /* Yellow text for active button */
-            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.3), 0 2px 4px rgba(0, 0, 0, 0.1); /* Inset shadow for pressed look, plus subtle outer shadow */
-            transform: translateY(0); /* Remove lift for active state */
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.3); /* Inset shadow for pressed look */
         }
-        /* Flex wrap behavior for mobile buttons */
-        @media (max-width: 767px) {
-            .dashboard-nav-buttons {
-                flex-direction: row; /* Keep buttons in a row */
-                flex-wrap: wrap; /* Allow buttons to wrap to the next line */
-                justify-content: center; /* Center buttons when they wrap */
-                gap: 0.75rem; /* Spacing between stacked buttons */
-            }
-            .dashboard-nav-buttons button {
-                width: auto; /* Allow buttons to take natural width */
-                flex-grow: 1; /* Allow buttons to grow and fill space */
-                max-width: calc(50% - 0.75rem); /* Max width for two buttons per row, with gap */
-            }
-        }
-
 
         /* Styling for individual order items */
         #orders-list > div {
-            background-color: #ffffff; /* White background for list items */
+            background-color: #f9fafb;
             border: 1px solid #e5e7eb;
-            border-radius: 10px; /* More rounded */
-            padding: 1.25rem; /* More padding */
+            border-radius: 8px;
+            padding: 1rem;
             margin-bottom: 1rem;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.08); /* Subtle shadow */
         }
         #orders-list > div p {
-            color: #2d3748; /* Slightly darker text for order details */
-            line-height: 1.5;
+            color: #1f2937;
         }
         #orders-list > div strong {
-            color: #1a202c; /* Stronger dark for labels */
+            color: #1f2937;
         }
         .mark-delivered-btn {
-            background-color: #28a745; /* Bootstrap green */
+            background-color: #10b981; /* Green */
             color: white;
-            padding: 0.6rem 1.2rem;
-            border-radius: 8px;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
             font-weight: 600;
             cursor: pointer;
-            transition: background-color 0.2s, transform 0.1s;
-            margin-top: 1rem; /* More space from other text */
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            transition: background-color 0.2s;
+            margin-top: 0.5rem; /* Space from other text */
         }
         .mark-delivered-btn:hover {
-            background-color: #218838; /* Darker green */
-            transform: translateY(-1px);
-            box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+            background-color: #059669; /* Darker green */
         }
 
 
-        /* Hamburger menu button styling */
+        /* Hamburger menu button styling - Always visible */
         #mobile-menu-button {
             display: block; /* Always show hamburger button */
             background: none;
@@ -413,57 +390,50 @@
             z-index: 60; /* Ensure it's above the mobile menu */
         }
         #mobile-menu-button svg {
-            width: 32px; /* Slightly larger icon */
-            height: 32px; /* Slightly larger icon */
-            fill: #1a202c; /* Dark color for icon */
-            stroke: #1a202c; /* Ensure stroke is also dark for visibility */
-            transition: transform 0.2s ease-in-out;
-        }
-        #mobile-menu-button:hover svg {
-            transform: scale(1.1); /* Subtle hover effect */
+            width: 28px;
+            height: 28px;
+            fill: #1f2937; /* Dark color for icon */
+            stroke: #1f2937; /* Ensure stroke is also dark for visibility */
         }
 
         /* Mobile menu styling (hidden by default, slides in) */
         #mobile-menu {
             position: absolute; /* Changed from fixed to absolute */
             top: 100%; /* Position below the navbar */
-            right: 1.5rem; /* Align to the right of the navbar */
-            width: 220px; /* Wider for better touch targets */
+            right: 1rem; /* Align to the right of the navbar */
+            width: 200px; /* Fixed width for a dropdown */
             height: auto; /* Adjust height based on content */
             background-color: #ffffff; /* White background */
-            color: #1a202c; /* Dark text */
+            color: #1f2937; /* Dark text */
             border: 1px solid #e2e8f0; /* Light border */
-            border-radius: 10px; /* More rounded */
-            box-shadow: 0 6px 16px rgba(0,0,0,0.15); /* Stronger shadow */
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1); /* Subtle shadow */
             opacity: 0; /* Start invisible */
             visibility: hidden; /* Hide completely */
-            transform: translateY(10px); /* Start slightly below */
-            transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out, transform 0.3s ease-in-out; /* Fade and slide transition */
+            transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out; /* Fade transition */
             z-index: 50; /* Ensure it's above other content */
-            padding: 0.75rem 0; /* More padding */
+            padding: 0.5rem 0; /* Adjusted padding */
             display: flex; /* Use flex for internal layout */
             flex-direction: column;
-            align-items: stretch; /* Stretch links to full width */
+            align-items: center;
             justify-content: flex-start;
         }
         #mobile-menu.open {
             opacity: 1; /* Fade in */
             visibility: visible; /* Make visible */
-            transform: translateY(0); /* Slide to position */
+            /* No transform needed for a fade-in dropdown */
         }
         #mobile-menu a {
-            color: #1a202c; /* Dark text for menu items */
-            padding: 0.85rem 1.25rem; /* More padding */
+            color: #1f2937; /* Dark text for menu items */
+            padding: 0.75rem 1rem; /* Adjusted padding */
             width: 100%;
-            text-align: left; /* Left align for menu items */
-            font-size: 1.05rem; /* Slightly larger font */
+            text-align: center;
+            font-size: 1rem; /* text-base */
             font-weight: 500; /* Medium weight */
-            transition: background-color 0.2s, color 0.2s;
-            border-radius: 6px; /* Subtle rounding for hover effect */
+            transition: background-color 0.2s;
         }
         #mobile-menu a:hover {
             background-color: #f0f2f5; /* Light gray on hover */
-            color: #000000; /* Darker text on hover */
         }
 
         /* Hide desktop nav links on all screens */
@@ -475,9 +445,9 @@
         #main-app-section {
             min-height: calc(100vh - 4rem); /* Adjust based on navbar height */
             width: 100%;
-            padding-top: 2rem; /* More vertical padding */
-            padding-bottom: 4rem; /* More vertical padding */
-            background-color: #f8fafc; /* Match body background */
+            padding-top: 1rem;
+            padding-bottom: 2rem;
+            background-color: #f0f2f5; /* Match body background */
             display: flex;
             flex-direction: column;
             align-items: center; /* Center content horizontally */
@@ -485,121 +455,96 @@
         #main-app-section > .container {
             width: 100%;
             max-width: 1200px; /* Max width for overall dashboard content */
-            padding: 0 1.5rem; /* Increased default horizontal padding for mobile */
-        }
-        @media (min-width: 768px) {
-            #main-app-section > .container {
-                padding: 0 2rem; /* More generous horizontal padding on desktop */
-            }
         }
         .dashboard-content-wrapper {
             width: 100%;
+            /* Removed max-width here, handled by #dashboard-content-area */
+            /* Removed margin-left/right here, handled by #dashboard-content-area */
         }
 
         /* Dashboard Content Area (the white card that contains the order page) */
         #dashboard-content-area {
             background-color: #ffffff; /* White background for the main dashboard area */
-            border-radius: 16px; /* More rounded corners */
-            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1); /* Softer, more diffuse shadow */
-            padding: 2rem; /* Increased padding inside this container */
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            padding: 1.5rem; /* Padding inside this container */
             width: 100%; /* Takes full width of its parent container */
-            max-width: 950px; /* Slightly wider maximum width for the dashboard content */
-            color: #1a202c; /* Dark text for content inside the white card */
+            max-width: 900px; /* Maximum width for the dashboard content */
+            color: #1f2937; /* Dark text for content inside the white card */
             margin-left: auto; /* Center the dashboard content area */
             margin-right: auto; /* Center the dashboard content area */
-            margin-top: 2rem; /* More space below the user info bar */
+            margin-top: 1rem; /* Space below the user info bar */
         }
 
         /* Order sections within dashboard (this is the order page itself) */
         #order-placement-section,
         #my-orders-section,
-        #account-settings-section {
-            background-color: #fefefe; /* Even lighter background for inner sections */
-            border: 1px solid #e2e8f0;
-            border-radius: 12px; /* Consistent rounding */
-            padding: 2rem; /* Increased padding inside the order section */
-            margin-top: 2rem; /* More space between the tab buttons and the order section / previous section */
-            box-shadow: inset 0 1px 3px rgba(0,0,0,0.05); /* Subtle inset shadow */
+        #account-settings-section { /* Applied to account settings too for consistency */
+            background-color: #f9fafb; /* Light background for content sections */
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            padding: 1.5rem; /* Padding inside the order section */
+            margin-top: 1.5rem; /* Space between the tab buttons and the order section / previous section */
         }
 
+
+        /* Adjust card within dashboard to be centered and have a max-width */
+        /* These styles are now largely handled by #dashboard-content-area and the individual sections */
+        #order-placement-section, #account-settings-section {
+             /* max-width and margin-left/right removed as they are now full width of #dashboard-content-area */
+        }
         /* Styling for the individual stat cards in My Orders section */
         .stat-card {
             background-color: #ffffff;
-            padding: 1.75rem; /* More padding */
-            border-radius: 12px; /* Consistent rounding */
-            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.08); /* More prominent shadow */
+            padding: 1.5rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
             display: flex;
             align-items: center;
             justify-content: space-between;
-            transition: transform 0.2s ease-in-out;
-        }
-        .stat-card:hover {
-            transform: translateY(-3px); /* Noticeable lift on hover */
         }
         .stat-card p {
             margin: 0;
-            line-height: 1.3;
         }
         .stat-card .stat-value {
-            font-size: 2.25rem; /* Larger value font size */
-            font-weight: 800; /* Extra bold */
-            color: #1a202c; /* Darker for impact */
+            font-size: 1.875rem; /* text-3xl */
+            font-weight: 700; /* font-bold */
         }
         .stat-card .stat-label {
-            font-size: 0.95rem; /* Slightly larger label font size */
-            color: #718096; /* Medium gray */
+            font-size: 0.875rem; /* text-sm */
+            color: #6b7280; /* gray-500 */
         }
-        .stat-card i {
-            font-size: 3rem; /* Larger icon */
-            opacity: 0.8; /* Slightly less opaque */
-        }
-
         /* Updated submit button for login page to match image */
         .submit-button {
             background-color: #000000; /* Black */
             color: #ffffff; /* White */
-            padding: 0.9rem 1.8rem; /* More generous padding */
-            border-radius: 0.75rem; /* More rounded */
+            padding: 0.75rem 1.5rem; /* Adjusted padding */
+            border-radius: 0.5rem; /* Slightly more rounded */
             font-weight: 700; /* Bold */
-            transition: background-color 0.2s ease-in-out, transform 0.1s ease-in-out, box-shadow 0.2s;
-            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); /* Enhanced shadow */
+            transition: background-color 0.2s ease-in-out, transform 0.1s ease-in-out;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
             border: none; /* Ensure no border */
             cursor: pointer;
-            font-size: 1.05rem; /* Slightly larger font */
         }
         .submit-button:hover {
             background-color: #1a1a1a; /* Slightly lighter black on hover */
-            transform: translateY(-2px); /* More pronounced lift */
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3); /* Stronger shadow on hover */
+            transform: translateY(-1px);
         }
-        .submit-button:active {
-            transform: translateY(0); /* Press down effect */
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Reduced shadow on active */
-        }
-
         /* Status colors for customer dashboard */
-        .status-submitted { color: #f59e0b; font-weight: 600; } /* Amber, previously for pending, now for submitted */
-        .status-processing { color: #3b82f6; font-weight: 600; } /* Blue */
-        .status-delivered { color: #10b981; font-weight: 600; } /* Green */
-        .status-cancelled { color: #ef4444; font-weight: 600; } /* Red */
-        .status-unknown { color: #6b7280; font-weight: 600; } /* Gray */
+        .status-submitted { color: #f59e0b; } /* Amber, previously for pending, now for submitted */
+        .status-processing { color: #3b82f6; } /* Blue */
+        .status-delivered { color: #10b981; } /* Green */
+        .status-cancelled { color: #ef4444; } /* Red */
+        .status-unknown { color: #6b7280; } /* Gray */
 
         /* Mobile-specific font size adjustments for auth-title */
         #auth-title {
-            font-size: 2.5rem; /* Larger text-3xl for mobile */
-            margin-bottom: 1.5rem; /* More space below title */
+            font-size: 2rem; /* text-2xl for mobile */
         }
         @media (min-width: 768px) {
             #auth-title {
-                font-size: 3.5rem; /* Larger text-4xl for desktop */
+                font-size: 3rem; /* text-3xl for desktop */
             }
-        }
-        #auth-subtitle {
-            font-size: 1rem; /* Base text size */
-            margin-top: 1.5rem; /* More space above subtitle */
-        }
-        .auth-toggle-link {
-            font-weight: 600; /* Make toggle links bolder */
         }
 
         /* Style for password input container to position the toggle button */
@@ -611,218 +556,53 @@
         /* Style for the password toggle button */
         .password-toggle {
             position: absolute;
-            right: 12px; /* Adjusted position */
+            right: 10px;
             top: 50%;
             transform: translateY(-50%);
             background: none;
             border: none;
             cursor: pointer;
             color: #6b7280; /* gray-500 */
-            font-size: 1.1rem; /* Slightly larger icon */
-            padding: 0.3rem; /* More padding for easier tap */
-            border-radius: 0.35rem; /* Slight rounding */
-            transition: color 0.2s ease-in-out, background-color 0.2s;
+            font-size: 1rem;
+            padding: 0.25rem;
+            border-radius: 0.25rem;
+            transition: color 0.2s ease-in-out;
         }
 
         .password-toggle:hover {
-            color: #1a202c; /* Darker gray on hover */
-            background-color: rgba(0,0,0,0.05); /* Subtle background on hover */
+            color: #1f2937; /* Darker gray on hover */
         }
 
         /* Styles for individual order item in the form */
         .single-order-item {
             border: 1px solid #e2e8f0; /* Light gray border */
-            border-radius: 0.75rem; /* More rounded */
-            padding: 1.5rem; /* More padding */
-            margin-bottom: 1.25rem; /* More space between multiple order items */
-            background-color: #fdfdfd; /* Very light background for items */
+            border-radius: 0.5rem;
+            padding: 1rem;
+            margin-bottom: 1rem; /* Space between multiple order items */
+            background-color: #f8fafc; /* Very light background */
             position: relative; /* For positioning remove button */
-            box-shadow: 0 1px 6px rgba(0,0,0,0.05); /* Subtle shadow */
         }
 
         .remove-order-item-btn {
             position: absolute;
-            top: 0.6rem; /* Adjusted position */
-            right: 0.6rem; /* Adjusted position */
-            background-color: #dc3545; /* Bootstrap red */
+            top: 0.5rem;
+            right: 0.5rem;
+            background-color: #ef4444; /* Red */
             color: white;
             border: none;
             border-radius: 50%; /* Circular button */
-            width: 30px; /* Larger touch target */
-            height: 30px; /* Larger touch target */
+            width: 24px;
+            height: 24px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 0.9rem; /* Larger 'X' */
-            font-weight: 700; /* Bolder 'X' */
+            font-size: 0.8rem;
             cursor: pointer;
-            transition: background-color 0.2s ease-in-out, transform 0.1s;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            transition: background-color 0.2s ease-in-out;
         }
 
         .remove-order-item-btn:hover {
-            background-color: #c82333; /* Darker red */
-            transform: translateY(-1px);
-            box-shadow: 0 4px 8px rgba(0,0,0,0.15);
-        }
-
-        /* Outer FAQ Details Container */
-        #faq-container-wrapper {
-            width: 100%;
-            max-width: 900px;
-            margin: 3.5rem auto; /* Consistent vertical margin */
-            padding: 0 1.5rem; /* Horizontal padding */
-        }
-
-        #faq-container-wrapper details {
-            background-color: #ffffff; /* White background for the outer container */
-            border: 1px solid #e2e8f0;
-            border-radius: 16px; /* More rounded corners */
-            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1); /* Consistent shadow with other main cards */
-            color: #1a202c;
-            overflow: hidden; /* Ensures border-radius applies to all content */
-        }
-
-        #faq-container-wrapper summary {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 1.5rem 2.5rem; /* More generous padding for the main FAQ header */
-            font-weight: 800; /* Extra bold for main header */
-            cursor: pointer;
-            list-style: none;
-            background-color: #FFD700; /* MTN Yellow background for the main FAQ header */
-            color: #1a202c; /* Dark text on yellow */
-            font-size: 1.75rem; /* Larger font size for the main header */
-            transition: background-color 0.2s ease-in-out, box-shadow 0.2s;
-            border-bottom: 1px solid rgba(0,0,0,0.1); /* Separator */
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1); /* Subtle shadow for the header */
-        }
-        #faq-container-wrapper summary:hover {
-            background-color: #FFC000; /* Slightly darker yellow on hover */
-            box-shadow: 0 6px 12px rgba(0,0,0,0.15); /* Enhanced shadow on hover */
-        }
-        #faq-container-wrapper summary::-webkit-details-marker {
-            display: none;
-        }
-        #faq-container-wrapper summary::after {
-            content: '+';
-            font-size: 2rem; /* Larger plus/minus icon */
-            line-height: 1;
-            transition: transform 0.2s ease-in-out;
-            color: #1a202c; /* Dark icon */
-            font-weight: 300;
-        }
-        #faq-container-wrapper details[open] summary::after {
-            content: '-';
-            transform: rotate(0deg);
-        }
-
-        /* FAQ Section (now internal to the outer details) Styling */
-        #faq-section-content { /* Renamed from #faq-section to avoid conflict with the outer section */
-            background-color: #f8fafc; /* Match body background for consistency */
-            padding: 3rem 1.5rem; /* Adjusted padding within the expanded section */
-            color: #1a202c;
-        }
-        #faq-section-content h2 { /* This heading is now removed in HTML, but keeping style in case needed */
-            display: none; /* Hide the inner H2 as it's replaced by the summary */
-        }
-
-
-        .faq-item {
-            background-color: #ffffff;
-            border: 1px solid #e5e7eb;
-            border-radius: 1rem; /* More rounded corners */
-            margin-bottom: 1.5rem; /* Increased space between FAQ items */
-            overflow: hidden;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08); /* More visible shadow */
-            transition: transform 0.2s ease-in-out, box-shadow 0.2s;
-        }
-        .faq-item:hover {
-            transform: translateY(-3px); /* Subtle lift on hover */
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.12);
-        }
-
-        .faq-item summary {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 1.25rem 2rem; /* More padding for summary */
-            font-weight: 600;
-            cursor: pointer;
-            list-style: none;
-            background-color: #fefefe; /* Very light background for summary */
-            transition: background-color 0.2s ease-in-out;
-            color: #2d3748; /* Slightly softer dark text for question */
-            font-size: 1.1rem; /* Slightly larger font size for questions */
-        }
-
-        .faq-item summary:hover {
-            background-color: #f0f4f8; /* Softer light gray on hover */
-        }
-
-        .faq-item summary::-webkit-details-marker {
-            display: none;
-        }
-
-        .faq-item summary::after {
-            content: '+';
-            font-size: 1.8rem; /* Larger icon */
-            line-height: 1;
-            transition: transform 0.2s ease-in-out;
-            color: #718096; /* Medium gray color for icon */
-            font-weight: 300; /* Thinner plus/minus */
-        }
-
-        .faq-item[open] summary::after {
-            content: '-';
-            transform: rotate(0deg);
-        }
-
-        .faq-item-content {
-            padding: 1.5rem 2rem 2rem; /* More generous padding */
-            color: #4a5568; /* Standard gray for answer text */
-            font-size: 1rem; /* Base font size for answers */
-            line-height: 1.7; /* Increased line-height for better readability */
-            border-top: 1px solid #edf2f7; /* Lighter separator line */
-            background-color: #ffffff; /* White background for content */
-        }
-
-        /* Mobile adjustments for general layout */
-        @media (max-width: 767px) {
-            .hero-content-wrapper {
-                padding-left: 1.5rem;
-                padding-right: 1.5rem;
-            }
-            .card {
-                padding: 2rem 1.5rem; /* Adjusted card padding for smaller phones */
-            }
-            #faq-container-wrapper { /* Ensure outer wrapper padding */
-                padding-left: 1rem; /* Reduced outer FAQ padding */
-                padding-right: 1rem; /* Reduced outer FAQ padding */
-            }
-            #faq-container-wrapper summary { /* Outer summary padding for mobile */
-                padding: 1.25rem 1.5rem;
-                font-size: 1.5rem;
-            }
-            #faq-section-content {
-                padding: 2rem 1rem; /* Adjusted content padding inside FAQ */
-            }
-            .faq-item summary, .faq-item-content {
-                padding-left: 1rem;
-                padding-right: 1rem;
-            }
-            #main-app-section > .container {
-                padding: 0 1.5rem; /* Ensure consistent padding on main app sections */
-            }
-            #dashboard-content-area {
-                padding: 1.5rem; /* Adjusted dashboard content area padding for mobile */
-            }
-            #order-placement-section,
-            #my-orders-section,
-            #account-settings-section {
-                padding: 1.5rem; /* Adjusted inner section padding for mobile */
-            }
+            background-color: #dc2626; /* Darker red */
         }
     </style>
 </head>
@@ -846,13 +626,16 @@
             <!-- Mobile menu now inside this container -->
             <div id="mobile-menu" class="hidden">
                 <a href="#" id="mobile-agent-link">Become an Agent</a>
-                <a href="https://wa.me/233531323296" target="_blank" id="mobile-contact-link">Contact Support</a>
-                <a href="https://chat.whatsapp.com/JZhLLboZmW9FjxcimGtZuX" target="_blank" id="mobile-community-link">Join Our Community</a>
+                <a href="#" id="mobile-contact-link">Contact Support</a>
             </div>
         </div>
     </nav>
 
-    <!-- Removed #contact-name-container as requested -->
+    <div id="contact-name-container">
+        <a href="https://wa.me/233531323296" target="_blank" class="no-underline">
+            <span id="contact-name-display">Admin</span>
+        </a>
+    </div>
     <div id="agent-message-container">
         <span>Please reach out to <a href="mailto:bdnetworksolutions01@gmail.com" class="font-bold underline text-blue-800 hover:text-blue-600">bdnetworksolutions01@gmail.com</a> via Gmail.</span>
     </div>
@@ -1015,54 +798,6 @@
                     <div id="message-box" class="hidden message-box info"></div>
                 </div>
             </div>
-        </div>
-
-        <!-- Outer Details for the entire FAQ section -->
-        <div id="faq-container-wrapper">
-            <details>
-                <summary>Frequently Asked Questions</summary>
-                <!-- FAQ Section content -->
-                <div id="faq-section-content">
-                    <div class="p-6 md:p-8">
-                        <div class="space-y-4">
-                            <details class="faq-item">
-                                <summary>Where do I find my order after placing one?</summary>
-                                <div class="faq-item-content">
-                                    <p>Simply click on the "My Orders" tab in your account, then click "Show My Orders" to view all your past and current orders.</p>
-                                </div>
-                            </details>
-
-                            <details class="faq-item">
-                                <summary>Can I place an order if I'm not signed in?</summary>
-                                <div class="faq-item-content">
-                                    <p>No, you can only place an order when you are logged into your account.</p>
-                                </div>
-                            </details>
-
-                            <details class="faq-item">
-                                <summary>Can I buy for friends and family?</summary>
-                                <div class="faq-item-content">
-                                    <p>Yes! There's an option to "Add Another Order" which allows you to place multiple orders at once for different numbers.</p>
-                                </div>
-                            </details>
-
-                            <details class="faq-item">
-                                <summary>Can I share the website link with my friends and family?</summary>
-                                <div class="faq-item-content">
-                                    <p>Yes, please do! They can create an account and place orders themselves too.</p>
-                                </div>
-                            </details>
-
-                            <details class="faq-item">
-                                <summary>What times can I place orders?</summary>
-                                <div class="faq-item-content">
-                                    <p>You can place orders at any time. Our active working hours are 8 AM to 8 PM, Monday to Saturday. If you place an order outside these hours, your data will still be delivered in due time. Thank you!</p>
-                                </div>
-                            </details>
-                        </div>
-                    </div>
-                </div>
-            </details>
         </div>
     </div>
 
@@ -1330,11 +1065,8 @@
             const mobileMenu = document.getElementById('mobile-menu');
             const mobileAgentLink = document.getElementById('mobile-agent-link');
             const mobileContactLink = document.getElementById('mobile-contact-link');
-            // REMOVED contactNameContainer from DOM Elements as requested by the user
+            const contactNameContainer = document.getElementById('contact-name-container');
             const agentMessageContainer = document.getElementById('agent-message-container');
-            // ADDED mobileCommunityLink as requested by the user
-            const mobileCommunityLink = document.getElementById('mobile-community-link');
-
 
             const forgotPasswordLink = document.getElementById('forgot-password-link');
             const resetEmailInput = document.getElementById('reset-email');
@@ -1362,12 +1094,7 @@
 
             function showAuthForms() {
                 mainAppSection.style.display = 'none';
-                // Set preLoginSection to flex to enable centering of auth card and FAQ
-                preLoginSection.style.display = 'flex';
-                preLoginSection.style.flexDirection = 'column';
-                preLoginSection.style.alignItems = 'center';
-                preLoginSection.style.justifyContent = 'center';
-
+                preLoginSection.style.display = 'block';
                 userDisplay.textContent = '';
                 
                 currentUserUid = null;
@@ -1730,7 +1457,7 @@
                                         customerId: currentUserUid,
                                         orders: ordersToProcess.map(order => ({
                                             ...order,
-                                            status: 'Submitted', // Changed from 'Processing' to 'Submitted'
+                                            status: 'Processing', // Set status to Processing after successful payment
                                             paymentReference: paymentReference // Add the Paystack reference
                                         }))
                                     })
@@ -1754,7 +1481,7 @@
                                     phone: order.recipientPhone,
                                     paymentReference: paymentReference, // Use the single Paystack reference for all related orders
                                     date: new Date().toLocaleString(),
-                                    status: 'Submitted' // Changed from 'Processing' to 'Submitted'
+                                    status: 'Processing' // Status after successful payment
                                 };
                                 currentOrders.push(newOrder);
                             });
@@ -1817,8 +1544,7 @@
             // --- My Orders Section Logic ---
             function updateOrderStats() {
                 totalOrdersSpan.textContent = currentOrders.filter(order => order.status !== 'Delivered').length;
-                // Updated to count 'Submitted' status
-                submittedOrdersSpan.textContent = currentOrders.filter(order => order.status === 'Submitted').length;
+                submittedOrdersSpan.textContent = currentOrders.filter(order => order.status === 'Submitted' || order.status === 'Processing').length;
             }
 
             function renderOrders() {
@@ -1838,7 +1564,6 @@
                         let statusClass = '';
                         let displayStatus = order.status;
 
-                        // Updated status display logic
                         if (order.status === 'Submitted') {
                             statusClass = 'status-submitted';
                             displayStatus = 'Submitted';
@@ -1846,10 +1571,7 @@
                             statusClass = 'status-processing';
                         } else if (order.status === 'Cancelled') {
                             statusClass = 'status-cancelled';
-                        } else if (order.status === 'Delivered') { // Should not be in this list due to filter, but good for completeness
-                            statusClass = 'status-delivered';
-                        }
-                        else {
+                        } else {
                             statusClass = 'status-unknown';
                         }
 
@@ -1995,15 +1717,17 @@
             mobileMenuButton.addEventListener('click', (event) => {
                 event.stopPropagation();
                 mobileMenu.classList.toggle('open');
-                // Hide agent message if menu opens
+                // Hide contact/agent info if menu opens
+                contactNameContainer.classList.remove('show');
                 agentMessageContainer.classList.remove('show');
             });
 
             // --- Mobile Menu Links Functionality ---
             mobileContactLink.addEventListener('click', (event) => {
-                // The href attribute already handles the redirection, no event.preventDefault() needed
-                // here unless other JS actions were intended before redirection.
-                agentMessageContainer.classList.remove('show'); // Ensure only one info box is open
+                event.preventDefault();
+                event.stopPropagation();
+                contactNameContainer.classList.toggle('show');
+                agentMessageContainer.classList.remove('show');
                 mobileMenu.classList.remove('open'); // Close menu after clicking link
             });
 
@@ -2011,23 +1735,22 @@
                 event.preventDefault();
                 event.stopPropagation();
                 agentMessageContainer.classList.toggle('show');
-                mobileMenu.classList.remove('open'); // Close menu after clicking link
-            });
-
-            // New: Mobile Community Link functionality
-            mobileCommunityLink.addEventListener('click', (event) => {
-                // The href attribute already handles the redirection, so no extra JS needed here
+                contactNameContainer.classList.remove('show');
                 mobileMenu.classList.remove('open'); // Close menu after clicking link
             });
 
 
             // Global click handler to close menus/info boxes
             document.addEventListener('click', (event) => {
+                const isClickInsideContact = contactNameContainer.contains(event.target) || mobileContactLink.contains(event.target);
                 const isClickInsideAgent = agentMessageContainer.contains(event.target) || mobileAgentLink.contains(event.target);
                 const isClickInsideMobileMenuButton = mobileMenuButton.contains(event.target);
                 const isClickInsideMobileMenu = mobileMenu.contains(event.target);
 
 
+                if (!isClickInsideContact && contactNameContainer.classList.contains('show')) {
+                    contactNameContainer.classList.remove('show');
+                }
                 if (!isClickInsideAgent && agentMessageContainer.classList.contains('show')) {
                     agentMessageContainer.classList.remove('show');
                 }
@@ -2041,6 +1764,7 @@
                 if (mobileMenu.classList.contains('open') && window.innerWidth >= 768) {
                     mobileMenu.classList.remove('open');
                 }
+                contactNameContainer.classList.remove('show');
                 agentMessageContainer.classList.remove('show');
             });
             
