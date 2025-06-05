@@ -1392,7 +1392,7 @@
                         customerEmail: registeredUserEmail || 'guest@example.com',
                         timestamp: new Date().toLocaleString(),
                         userId: currentUserUid,
-                        status: 'Submitted' // Initial status
+                        status: 'Initiated' // Initial status for Apps Script
                     });
                     totalPaymentAmount += amount;
                 });
@@ -1402,8 +1402,41 @@
                     return;
                 }
 
-                displayMessage('Preparing payment for all orders. Please wait...', 'info');
+                displayMessage('Submitting order details and preparing payment. Please wait...', 'info');
                 console.log('Collected Orders for Paystack:', ordersToProcess);
+
+                // --- Google Apps Script Integration (before Paystack loads) ---
+                const GOOGLE_APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwKwu8XC1awByOIwiTXGGY7iMr1J_vNSrZ1tUv7tPY-Edlzvrs5H1SWyHKIjz86leYi/exec'; // NEW URL provided by the user
+
+                try {
+                    const response = await fetch(GOOGLE_APPS_SCRIPT_URL, {
+                        method: 'POST',
+                        mode: 'no-cors', // Required for simple requests to Apps Script
+                        cache: 'no-cache',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({
+                            customerName: registeredUserName,
+                            customerEmail: registeredUserEmail,
+                            customerId: currentUserUid,
+                            orders: ordersToProcess,
+                            // paymentReference will be updated by Paystack webhook later
+                            // orderStatus is already 'Initiated' in ordersToProcess
+                        })
+                    });
+
+                    // Note: With 'no-cors' mode, you cannot directly read the response body or status.
+                    // The request will succeed from the browser's perspective if it's sent.
+                    console.log('Order details sent to Google Apps Script. Response (if any, will be opaque due to no-cors):', response);
+                    displayMessage('Order details sent to spreadsheet. Proceeding to payment.', 'info');
+
+                } catch (error) {
+                    console.error('Error sending order details to Google Apps Script:', error);
+                    displayMessage('Failed to send order details to spreadsheet. Please try again or contact support.', 'error');
+                    // Decide if you want to stop here or proceed to payment anyway.
+                    // For now, we'll proceed to payment even if logging fails, as payment is critical.
+                }
 
                 // --- Paystack Checkout Integration for combined amount ---
                 const handler = PaystackPop.setup({
@@ -1433,8 +1466,8 @@
                         console.log('Paystack Payment Successful! Reference:', paymentReference);
                         displayMessage('Payment successful! Your orders are being processed.', 'success');
 
-                        // Retrieve individual order details from metadata (if needed, though we have `ordersToProcess` directly)
                         // For robustness, we'll use the `ordersToProcess` array we already built.
+                        // Update the status and payment reference for orders stored in local storage
                         ordersToProcess.forEach(order => {
                             const newOrder = {
                                 id: 'ORD' + Date.now() + '-' + Math.floor(Math.random() * 1000), // More unique ID
@@ -1444,11 +1477,16 @@
                                 phone: order.recipientPhone,
                                 paymentReference: paymentReference, // Use the single Paystack reference for all related orders
                                 date: new Date().toLocaleString(),
-                                status: 'Submitted' // Initial status after successful payment
+                                status: 'Processing' // Status after successful payment
                             };
                             currentOrders.push(newOrder);
                         });
                         localStorage.setItem(`userOrders_${currentUserUid}`, JSON.stringify(currentOrders));
+
+                        // You would ideally also send a request to your backend server here
+                        // to update the order status and payment reference in your main database
+                        // and also in the Google Sheet (via another Apps Script call or your backend).
+                        // This is where the Paystack webhook (from Step 3) would be crucial for final confirmation.
 
                         // Reset form and switch view
                         orderItemsContainer.innerHTML = ''; // Clear all existing items
@@ -1787,3 +1825,4 @@
     </script>
 </body>
 </html>
+
