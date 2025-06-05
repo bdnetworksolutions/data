@@ -691,21 +691,66 @@
             box-shadow: 0 4px 8px rgba(0,0,0,0.15);
         }
 
-        /* FAQ Section Styling */
-        #faq-section {
-            background-color: #f8fafc; /* Match body background for consistency */
-            padding: 3.5rem 1.5rem; /* Even more vertical and horizontal padding */
+        /* Outer FAQ Details Container */
+        #faq-container-wrapper {
             width: 100%;
             max-width: 900px;
-            margin: 3.5rem auto; /* More vertical margin for better separation */
+            margin: 3.5rem auto; /* Consistent vertical margin */
+            padding: 0 1.5rem; /* Horizontal padding */
+        }
+
+        #faq-container-wrapper details {
+            background-color: #ffffff; /* White background for the outer container */
+            border: 1px solid #e2e8f0;
             border-radius: 16px; /* More rounded corners */
-            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1); /* Consistent shadow with card */
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1); /* Consistent shadow with other main cards */
+            color: #1a202c;
+            overflow: hidden; /* Ensures border-radius applies to all content */
+        }
+
+        #faq-container-wrapper summary {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem 2.5rem; /* More generous padding for the main FAQ header */
+            font-weight: 800; /* Extra bold for main header */
+            cursor: pointer;
+            list-style: none;
+            background-color: #FFD700; /* MTN Yellow background for the main FAQ header */
+            color: #1a202c; /* Dark text on yellow */
+            font-size: 1.75rem; /* Larger font size for the main header */
+            transition: background-color 0.2s ease-in-out, box-shadow 0.2s;
+            border-bottom: 1px solid rgba(0,0,0,0.1); /* Separator */
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1); /* Subtle shadow for the header */
+        }
+        #faq-container-wrapper summary:hover {
+            background-color: #FFC000; /* Slightly darker yellow on hover */
+            box-shadow: 0 6px 12px rgba(0,0,0,0.15); /* Enhanced shadow on hover */
+        }
+        #faq-container-wrapper summary::-webkit-details-marker {
+            display: none;
+        }
+        #faq-container-wrapper summary::after {
+            content: '+';
+            font-size: 2rem; /* Larger plus/minus icon */
+            line-height: 1;
+            transition: transform 0.2s ease-in-out;
+            color: #1a202c; /* Dark icon */
+            font-weight: 300;
+        }
+        #faq-container-wrapper details[open] summary::after {
+            content: '-';
+            transform: rotate(0deg);
+        }
+
+        /* FAQ Section (now internal to the outer details) Styling */
+        #faq-section {
+            background-color: #f8fafc; /* Match body background for consistency */
+            padding: 3rem 1.5rem; /* Adjusted padding within the expanded section */
             color: #1a202c;
         }
-        #faq-section h2 {
-            font-size: 2.25rem; /* Larger FAQ heading */
-            margin-bottom: 2.5rem; /* More space below heading */
-            color: #1a202c; /* Darker for impact */
+        #faq-section h2 { /* This heading is now removed in HTML, but keeping style in case needed */
+            display: none; /* Hide the inner H2 as it's replaced by the summary */
         }
 
         .faq-item {
@@ -765,6 +810,30 @@
             line-height: 1.7; /* Increased line-height for better readability */
             border-top: 1px solid #edf2f7; /* Lighter separator line */
             background-color: #ffffff; /* White background for content */
+        }
+
+        /* Mobile adjustments for general layout */
+        @media (max-width: 767px) {
+            .hero-content-wrapper {
+                padding-left: 1.5rem;
+                padding-right: 1.5rem;
+            }
+            .card {
+                padding-left: 1.5rem;
+                padding-right: 1.5rem;
+            }
+            #faq-container-wrapper { /* Ensure outer wrapper padding */
+                padding-left: 1.5rem;
+                padding-right: 1.5rem;
+            }
+            #faq-container-wrapper summary { /* Outer summary padding for mobile */
+                padding: 1.25rem 1.5rem;
+                font-size: 1.5rem;
+            }
+            .faq-item summary, .faq-item-content {
+                padding-left: 1rem;
+                padding-right: 1rem;
+            }
         }
     </style>
 </head>
@@ -942,49 +1011,54 @@
             </div>
         </div>
 
-        <!-- FAQ Section for the pre-login page -->
-        <section id="faq-section">
-            <div class="p-6 md:p-8">
-                <h2 class="text-2xl font-bold mb-6 text-center">Frequently Asked Questions</h2>
+        <!-- Outer Details for the entire FAQ section -->
+        <div id="faq-container-wrapper">
+            <details>
+                <summary>Frequently Asked Questions</summary>
+                <!-- FAQ Section for the pre-login page -->
+                <section id="faq-section">
+                    <div class="p-6 md:p-8">
+                        <!-- Removed the H2 heading here as it's now in the summary -->
+                        <div class="space-y-4">
+                            <details class="faq-item">
+                                <summary>Where do I find my order after placing one?</summary>
+                                <div class="faq-item-content">
+                                    <p>Simply click on the "My Orders" tab in your account, then click "Show My Orders" to view all your past and current orders.</p>
+                                </div>
+                            </details>
 
-                <div class="space-y-4">
-                    <details class="faq-item">
-                        <summary>Where do I find my order after placing one?</summary>
-                        <div class="faq-item-content">
-                            <p>Simply click on the "My Orders" tab in your account, then click "Show My Orders" to view all your past and current orders.</p>
-                        </div>
-                    </details>
+                            <details class="faq-item">
+                                <summary>Can I place an order if I'm not signed in?</summary>
+                                <div class="faq-item-content">
+                                    <p>No, you can only place an order when you are logged into your account.</p>
+                                </div>
+                            </details>
 
-                    <details class="faq-item">
-                        <summary>Can I place an order if I'm not signed in?</summary>
-                        <div class="faq-item-content">
-                            <p>No, you can only place an order when you are logged into your account.</p>
-                        </div>
-                    </details>
+                            <details class="faq-item">
+                                <summary>Can I buy for friends and family?</summary>
+                                <div class="faq-item-content">
+                                    <p>Yes! There's an option to "Add Another Order" which allows you to place multiple orders at once for different numbers.</p>
+                                </div>
+                            </details>
 
-                    <details class="faq-item">
-                        <summary>Can I buy for friends and family?</summary>
-                        <div class="faq-item-content">
-                            <p>Yes! There's an option to "Add Another Order" which allows you to place multiple orders at once for different numbers.</p>
-                        </div>
-                    </details>
+                            <details class="faq-item">
+                                <summary>Can I share the website link with my friends and family?</summary>
+                                <div class="faq-item-content">
+                                    <p>Yes, please do! They can create an account and place orders themselves too.</p>
+                                </div>
+                            </details>
 
-                    <details class="faq-item">
-                        <summary>Can I share the website link with my friends and family?</summary>
-                        <div class="faq-item-content">
-                            <p>Yes, please do! They can create an account and place orders themselves too.</p>
+                            <details class="faq-item">
+                                <summary>What times can I place orders?</summary>
+                                <div class="faq-item-content">
+                                    <p>You can place orders at any time. Our active working hours are 8 AM to 8 PM, Monday to Saturday. If you place an order outside these hours, your data will still be delivered in due time. Thank you!</p>
+                                </div>
+                            </details>
                         </div>
-                    </details>
-
-                    <details class="faq-item">
-                        <summary>What times can I place orders?</summary>
-                        <div class="faq-item-content">
-                            <p>You can place orders at any time. Our active working hours are 8 AM to 8 PM, Monday to Saturday. If you place an order outside these hours, your data will still be delivered in due time. Thank you!</p>
-                        </div>
-                    </details>
-                </div>
-            </div>
-        </section>
+                    </div>
+                </section>
+            </details>
+        </div>
     </div>
 
     <div id="main-app-section" class="flex flex-col flex-grow items-center w-full px-4 sm:px-6 lg:px-8 py-8" style="display: none;">
