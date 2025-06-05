@@ -289,35 +289,6 @@
             border-radius: 0;
         }
 
-        /* Contact name display styling (for floating box) */
-        #contact-name-container {
-            background-color: #263238; /* Dark slate gray */
-            color: #FFD700; /* MTN Yellow text */
-            padding: 0.75rem 1.5rem; /* More padding */
-            border-radius: 10px; /* More rounded */
-            font-weight: bold;
-            opacity: 0;
-            visibility: hidden;
-            pointer-events: none; /* Prevents interaction when hidden */
-            transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out, transform 0.2s ease-in-out;
-            cursor: pointer;
-            position: absolute; /* Position absolutely */
-            top: 5.5rem; /* Below the nav bar with more clearance */
-            right: 1.5rem; /* Align with right edge */
-            z-index: 30; /* Ensure it's above other content */
-            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-        }
-        #contact-name-container.show {
-            opacity: 1;
-            visibility: visible;
-            pointer-events: auto; /* Enables interaction when shown */
-            transform: translateY(0);
-        }
-        #contact-name-container:hover {
-            background-color: #37474f; /* Slightly lighter on hover */
-            color: #FFC000;
-        }
-
         /* Agent Message Display styling (for floating box) */
         #agent-message-container {
             background-color: #fffde7; /* Very light yellow */
@@ -744,14 +715,15 @@
         }
 
         /* FAQ Section (now internal to the outer details) Styling */
-        #faq-section {
+        #faq-section-content { /* Renamed from #faq-section to avoid conflict with the outer section */
             background-color: #f8fafc; /* Match body background for consistency */
             padding: 3rem 1.5rem; /* Adjusted padding within the expanded section */
             color: #1a202c;
         }
-        #faq-section h2 { /* This heading is now removed in HTML, but keeping style in case needed */
+        #faq-section-content h2 { /* This heading is now removed in HTML, but keeping style in case needed */
             display: none; /* Hide the inner H2 as it's replaced by the summary */
         }
+
 
         .faq-item {
             background-color: #ffffff;
@@ -857,16 +829,13 @@
             <!-- Mobile menu now inside this container -->
             <div id="mobile-menu" class="hidden">
                 <a href="#" id="mobile-agent-link">Become an Agent</a>
-                <a href="#" id="mobile-contact-link">Contact Support</a>
+                <a href="https://wa.me/233531323296" target="_blank" id="mobile-contact-link">Contact Support</a>
+                <a href="https://chat.whatsapp.com/JZhLLboZmW9FjxcimGtZuX" target="_blank" id="mobile-community-link">Join Our Community</a>
             </div>
         </div>
     </nav>
 
-    <div id="contact-name-container">
-        <a href="https://wa.me/233531323296" target="_blank" class="no-underline">
-            <span id="contact-name-display">Admin</span>
-        </a>
-    </div>
+    <!-- Removed #contact-name-container -->
     <div id="agent-message-container">
         <span>Please reach out to <a href="mailto:bdnetworksolutions01@gmail.com" class="font-bold underline text-blue-800 hover:text-blue-600">bdnetworksolutions01@gmail.com</a> via Gmail.</span>
     </div>
@@ -1015,10 +984,9 @@
         <div id="faq-container-wrapper">
             <details>
                 <summary>Frequently Asked Questions</summary>
-                <!-- FAQ Section for the pre-login page -->
-                <section id="faq-section">
+                <!-- FAQ Section content -->
+                <div id="faq-section-content">
                     <div class="p-6 md:p-8">
-                        <!-- Removed the H2 heading here as it's now in the summary -->
                         <div class="space-y-4">
                             <details class="faq-item">
                                 <summary>Where do I find my order after placing one?</summary>
@@ -1056,7 +1024,7 @@
                             </details>
                         </div>
                     </div>
-                </section>
+                </div>
             </details>
         </div>
     </div>
@@ -1328,7 +1296,8 @@
             const mobileMenu = document.getElementById('mobile-menu');
             const mobileAgentLink = document.getElementById('mobile-agent-link');
             const mobileContactLink = document.getElementById('mobile-contact-link');
-            const contactNameContainer = document.getElementById('contact-name-container');
+            const mobileCommunityLink = document.getElementById('mobile-community-link'); // Added new link DOM element
+            // Removed contactNameContainer reference
             const agentMessageContainer = document.getElementById('agent-message-container');
 
             const forgotPasswordLink = document.getElementById('forgot-password-link');
@@ -1724,7 +1693,7 @@
                                         customerId: currentUserUid,
                                         orders: ordersToProcess.map(order => ({
                                             ...order,
-                                            status: 'Processing', // Set status to Processing after successful payment
+                                            status: 'Submitted', // Changed from 'Processing' to 'Submitted'
                                             paymentReference: paymentReference // Add the Paystack reference
                                         }))
                                     })
@@ -1748,7 +1717,7 @@
                                     phone: order.recipientPhone,
                                     paymentReference: paymentReference, // Use the single Paystack reference for all related orders
                                     date: new Date().toLocaleString(),
-                                    status: 'Processing' // Status after successful payment
+                                    status: 'Submitted' // Changed from 'Processing' to 'Submitted'
                                 };
                                 currentOrders.push(newOrder);
                             });
@@ -1988,17 +1957,15 @@
             mobileMenuButton.addEventListener('click', (event) => {
                 event.stopPropagation();
                 mobileMenu.classList.toggle('open');
-                // Hide contact/agent info if menu opens
-                contactNameContainer.classList.remove('show');
+                // Hide agent message if menu opens
                 agentMessageContainer.classList.remove('show');
             });
 
             // --- Mobile Menu Links Functionality ---
             mobileContactLink.addEventListener('click', (event) => {
-                event.preventDefault();
-                event.stopPropagation();
-                contactNameContainer.classList.toggle('show');
-                agentMessageContainer.classList.remove('show');
+                // The href attribute already handles the redirection, no event.preventDefault() needed
+                // here unless other JS actions were intended before redirection.
+                agentMessageContainer.classList.remove('show'); // Ensure only one info box is open
                 mobileMenu.classList.remove('open'); // Close menu after clicking link
             });
 
@@ -2006,22 +1973,23 @@
                 event.preventDefault();
                 event.stopPropagation();
                 agentMessageContainer.classList.toggle('show');
-                contactNameContainer.classList.remove('show');
+                mobileMenu.classList.remove('open'); // Close menu after clicking link
+            });
+
+            // New: Mobile Community Link functionality
+            mobileCommunityLink.addEventListener('click', (event) => {
+                // The href attribute already handles the redirection, so no extra JS needed here
                 mobileMenu.classList.remove('open'); // Close menu after clicking link
             });
 
 
             // Global click handler to close menus/info boxes
             document.addEventListener('click', (event) => {
-                const isClickInsideContact = contactNameContainer.contains(event.target) || mobileContactLink.contains(event.target);
                 const isClickInsideAgent = agentMessageContainer.contains(event.target) || mobileAgentLink.contains(event.target);
                 const isClickInsideMobileMenuButton = mobileMenuButton.contains(event.target);
                 const isClickInsideMobileMenu = mobileMenu.contains(event.target);
 
 
-                if (!isClickInsideContact && contactNameContainer.classList.contains('show')) {
-                    contactNameContainer.classList.remove('show');
-                }
                 if (!isClickInsideAgent && agentMessageContainer.classList.contains('show')) {
                     agentMessageContainer.classList.remove('show');
                 }
@@ -2035,7 +2003,6 @@
                 if (mobileMenu.classList.contains('open') && window.innerWidth >= 768) {
                     mobileMenu.classList.remove('open');
                 }
-                contactNameContainer.classList.remove('show');
                 agentMessageContainer.classList.remove('show');
             });
             
