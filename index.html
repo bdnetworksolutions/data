@@ -481,7 +481,7 @@
         #main-app-section > .container {
             width: 100%;
             max-width: 1200px; /* Max width for overall dashboard content */
-            padding: 0 1rem; /* Default horizontal padding for mobile */
+            padding: 0 1.5rem; /* Increased default horizontal padding for mobile */
         }
         @media (min-width: 768px) {
             #main-app-section > .container {
@@ -791,20 +791,33 @@
                 padding-right: 1.5rem;
             }
             .card {
-                padding-left: 1.5rem;
-                padding-right: 1.5rem;
+                padding: 2rem 1.5rem; /* Adjusted card padding for smaller phones */
             }
             #faq-container-wrapper { /* Ensure outer wrapper padding */
-                padding-left: 1.5rem;
-                padding-right: 1.5rem;
+                padding-left: 1rem; /* Reduced outer FAQ padding */
+                padding-right: 1rem; /* Reduced outer FAQ padding */
             }
             #faq-container-wrapper summary { /* Outer summary padding for mobile */
                 padding: 1.25rem 1.5rem;
                 font-size: 1.5rem;
             }
+            #faq-section-content {
+                padding: 2rem 1rem; /* Adjusted content padding inside FAQ */
+            }
             .faq-item summary, .faq-item-content {
                 padding-left: 1rem;
                 padding-right: 1rem;
+            }
+            #main-app-section > .container {
+                padding: 0 1.5rem; /* Ensure consistent padding on main app sections */
+            }
+            #dashboard-content-area {
+                padding: 1.5rem; /* Adjusted dashboard content area padding for mobile */
+            }
+            #order-placement-section,
+            #my-orders-section,
+            #account-settings-section {
+                padding: 1.5rem; /* Adjusted inner section padding for mobile */
             }
         }
     </style>
@@ -814,7 +827,7 @@
         <div class="container mx-auto flex items-center justify-between relative">
             <div class="flex items-center">
                 <a href="https://i.imgur.com/Sede46z.jpeg" target="_blank" class="flex items-center">
-                    <img src="https://i.imgur.com/Sede46z.jpeg" alt="BD NETWORK SOLUTIONS Logo" class="h-12 w-auto mr-3 rounded-full">
+                    <img src="https://i.imgur.com/Sede46z.jpeg" alt="BD NETWORK SOLUTIONS Logo" class="h-12 w-auto mr-3 rounded-full flex-shrink-0 object-contain">
                 </a>
                 <div class="flex flex-col items-start ml-3">
                     <span class="logo-text">BD NETWORK SOLUTIONS</span>
@@ -2063,3 +2076,4 @@
     </script>
 </body>
 </html>
+
