@@ -275,34 +275,7 @@
             border-radius: 0;
         }
 
-        /* Contact name display styling */
-        #contact-name-container {
-            background-color: #1a202c; /* Dark background */
-            color: #FFD700; /* MTN Yellow text */
-            padding: 0.5rem 1rem;
-            border-radius: 8px;
-            font-weight: bold;
-            opacity: 0;
-            visibility: hidden;
-            pointer-events: none; /* Prevents interaction when hidden */
-            transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
-            cursor: pointer;
-            position: absolute; /* Position absolutely */
-            top: 5rem; /* Below the nav bar */
-            right: 1.5rem; /* Align with right edge */
-            z-index: 30; /* Ensure it's above other content */
-        }
-        #contact-name-container.show {
-            opacity: 1;
-            visibility: visible;
-            pointer-events: auto; /* Enables interaction when shown */
-        }
-        #contact-name-container:hover {
-            background-color: #2d3748;
-            color: #FFC000;
-        }
-
-        /* Agent Message Display styling */
+        /* Agent Message Display styling (contact-name-container removed) */
         #agent-message-container {
             background-color: #fffbeb; /* Light yellow background */
             color: #92400e; /* Dark brown text */
@@ -604,6 +577,108 @@
         .remove-order-item-btn:hover {
             background-color: #dc2626; /* Darker red */
         }
+
+        /* FAQ Section Styles */
+        .faq-section {
+            background-color: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            padding: 2rem;
+            margin: 2rem auto; /* Center and provide vertical spacing */
+            max-width: 900px;
+            width: 90%; /* Responsive width */
+        }
+
+        .faq-item {
+            border-bottom: 1px solid #e2e8f0;
+            padding: 1rem 0;
+        }
+
+        .faq-item:last-child {
+            border-bottom: none;
+        }
+
+        .faq-question {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            padding: 0.75rem 0;
+            font-size: 1.125rem; /* text-lg */
+            font-weight: 600;
+            color: #1f2937;
+            cursor: pointer;
+            background: none;
+            border: none;
+            text-align: left;
+        }
+
+        .faq-question .icon {
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .faq-question.active .icon {
+            transform: rotate(180deg);
+        }
+
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease-in-out;
+            padding: 0 0.75rem; /* Indent the answer */
+            color: #4a5568;
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+
+        .faq-answer.open {
+            max-height: 500px; /* Adjust as needed to fit content */
+            padding-top: 0.5rem;
+            padding-bottom: 1rem;
+        }
+
+        /* Styles for the main FAQ toggle */
+        #main-faq-toggle-button {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 0.5rem;
+            width: 100%;
+            background-color: #FFD700; /* MTN Yellow */
+            color: #1f2937; /* Dark text */
+            padding: 1rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 1.25rem; /* text-xl */
+            transition: background-color 0.2s ease-in-out, transform 0.1s ease-in-out;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            border: none;
+            cursor: pointer;
+            margin-bottom: 1.5rem; /* Space below the button */
+        }
+
+        #main-faq-toggle-button:hover {
+            background-color: #FFC000;
+            transform: translateY(-2px);
+        }
+
+        #main-faq-toggle-button .icon {
+            transition: transform 0.3s ease-in-out;
+        }
+
+        #main-faq-toggle-button.active .icon {
+            transform: rotate(180deg);
+        }
+
+        #main-faq-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.7s ease-in-out;
+        }
+
+        #main-faq-content.open {
+            max-height: 1000px; /* Large enough to contain all FAQ items */
+        }
     </style>
 </head>
 <body>
@@ -627,15 +702,12 @@
             <div id="mobile-menu" class="hidden">
                 <a href="#" id="mobile-agent-link">Become an Agent</a>
                 <a href="#" id="mobile-contact-link">Contact Support</a>
+                <a href="https://chat.whatsapp.com/JZhLLboZmW9FjxcimGtZuX" target="_blank">Join our community</a>
             </div>
         </div>
     </nav>
 
-    <div id="contact-name-container">
-        <a href="https://wa.me/233531323296" target="_blank" class="no-underline">
-            <span id="contact-name-display">Admin</span>
-        </a>
-    </div>
+    <!-- Removed contact-name-container as it's no longer needed -->
     <div id="agent-message-container">
         <span>Please reach out to <a href="mailto:bdnetworksolutions01@gmail.com" class="font-bold underline text-blue-800 hover:text-blue-600">bdnetworksolutions01@gmail.com</a> via Gmail.</span>
     </div>
@@ -799,6 +871,65 @@
                 </div>
             </div>
         </div>
+
+        <!-- Frequently Asked Questions Section -->
+        <section class="faq-section">
+            <button id="main-faq-toggle-button">
+                <span>Frequently Asked Questions (FAQ)</span>
+                <i class="fas fa-chevron-down icon"></i>
+            </button>
+            <div id="main-faq-content">
+                <div class="faq-item">
+                    <button class="faq-question">
+                        Where do I find my order after placing one?
+                        <i class="fas fa-chevron-down icon"></i>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Simply click on the "My Orders" tab in your account, then click "Show Orders" to view all your past and current orders.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-question">
+                        Can I place an order if I'm not signed in?
+                        <i class="fas fa-chevron-down icon"></i>
+                    </button>
+                    <div class="faq-answer">
+                        <p>No, you can only place an order when you are logged into your account.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-question">
+                        Can I place an order for friends and family?
+                        <i class="fas fa-chevron-down icon"></i>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Yes. There's an option to "Add Another Order" which allows you to place multiple orders at once for different numbers.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-question">
+                        Can I share the website link with my friends and family?
+                        <i class="fas fa-chevron-down icon"></i>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Yes, please do. They can create an account and place orders themselves too.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-question">
+                        What times can I place orders?
+                        <i class="fas fa-chevron-down icon"></i>
+                    </button>
+                    <div class="faq-answer">
+                        <p>You can place orders at any time. Our active working hours are 8 AM to 8 PM, Monday to Saturday. If you place an order outside these hours, your data will still be delivered in due time. Thank you</p>
+                    </div>
+                </div>
+            </div>
+        </section>
     </div>
 
     <div id="main-app-section" class="flex flex-col flex-grow items-center w-full px-4 sm:px-6 lg:px-8 py-8" style="display: none;">
@@ -1065,7 +1196,7 @@
             const mobileMenu = document.getElementById('mobile-menu');
             const mobileAgentLink = document.getElementById('mobile-agent-link');
             const mobileContactLink = document.getElementById('mobile-contact-link');
-            const contactNameContainer = document.getElementById('contact-name-container');
+            // Removed contactNameContainer from DOM Elements
             const agentMessageContainer = document.getElementById('agent-message-container');
 
             const forgotPasswordLink = document.getElementById('forgot-password-link');
@@ -1078,6 +1209,11 @@
 
             // Template for cloning order items
             const orderItemTemplate = document.getElementById('order-item-template');
+
+            // Main FAQ toggle elements
+            const mainFaqToggleButton = document.getElementById('main-faq-toggle-button');
+            const mainFaqContent = document.getElementById('main-faq-content');
+
 
             let currentView = 'order-placement';
             let orderItemCounter = 0; // To ensure unique IDs for dynamically added fields
@@ -1457,7 +1593,7 @@
                                         customerId: currentUserUid,
                                         orders: ordersToProcess.map(order => ({
                                             ...order,
-                                            status: 'Processing', // Set status to Processing after successful payment
+                                            status: 'Submitted', // Changed from 'Processing' to 'Submitted'
                                             paymentReference: paymentReference // Add the Paystack reference
                                         }))
                                     })
@@ -1481,7 +1617,7 @@
                                     phone: order.recipientPhone,
                                     paymentReference: paymentReference, // Use the single Paystack reference for all related orders
                                     date: new Date().toLocaleString(),
-                                    status: 'Processing' // Status after successful payment
+                                    status: 'Submitted' // Changed from 'Processing' to 'Submitted'
                                 };
                                 currentOrders.push(newOrder);
                             });
@@ -1717,16 +1853,16 @@
             mobileMenuButton.addEventListener('click', (event) => {
                 event.stopPropagation();
                 mobileMenu.classList.toggle('open');
-                // Hide contact/agent info if menu opens
-                contactNameContainer.classList.remove('show');
+                // Hide agent message if menu opens
                 agentMessageContainer.classList.remove('show');
             });
 
             // --- Mobile Menu Links Functionality ---
+            // Mobile Contact Link - Now redirects directly
             mobileContactLink.addEventListener('click', (event) => {
                 event.preventDefault();
                 event.stopPropagation();
-                contactNameContainer.classList.toggle('show');
+                window.open('https://wa.me/233531323296', '_blank'); // Direct redirection
                 agentMessageContainer.classList.remove('show');
                 mobileMenu.classList.remove('open'); // Close menu after clicking link
             });
@@ -1735,22 +1871,16 @@
                 event.preventDefault();
                 event.stopPropagation();
                 agentMessageContainer.classList.toggle('show');
-                contactNameContainer.classList.remove('show');
                 mobileMenu.classList.remove('open'); // Close menu after clicking link
             });
 
 
             // Global click handler to close menus/info boxes
             document.addEventListener('click', (event) => {
-                const isClickInsideContact = contactNameContainer.contains(event.target) || mobileContactLink.contains(event.target);
                 const isClickInsideAgent = agentMessageContainer.contains(event.target) || mobileAgentLink.contains(event.target);
                 const isClickInsideMobileMenuButton = mobileMenuButton.contains(event.target);
                 const isClickInsideMobileMenu = mobileMenu.contains(event.target);
 
-
-                if (!isClickInsideContact && contactNameContainer.classList.contains('show')) {
-                    contactNameContainer.classList.remove('show');
-                }
                 if (!isClickInsideAgent && agentMessageContainer.classList.contains('show')) {
                     agentMessageContainer.classList.remove('show');
                 }
@@ -1764,7 +1894,6 @@
                 if (mobileMenu.classList.contains('open') && window.innerWidth >= 768) {
                     mobileMenu.classList.remove('open');
                 }
-                contactNameContainer.classList.remove('show');
                 agentMessageContainer.classList.remove('show');
             });
             
@@ -1821,6 +1950,35 @@
             setupPasswordToggle('signin-password', 'toggle-signin-password');
             setupPasswordToggle('signup-password', 'toggle-signup-password');
             setupPasswordToggle('signup-confirm-password', 'toggle-signup-confirm-password');
+
+            // Main FAQ Accordion Logic
+            mainFaqToggleButton.addEventListener('click', () => {
+                mainFaqContent.classList.toggle('open');
+                mainFaqToggleButton.classList.toggle('active');
+
+                if (mainFaqContent.classList.contains('open')) {
+                    mainFaqContent.style.maxHeight = mainFaqContent.scrollHeight + "px";
+                } else {
+                    mainFaqContent.style.maxHeight = "0";
+                }
+            });
+
+
+            // Individual FAQ Accordion Logic
+            const faqQuestions = document.querySelectorAll('.faq-question');
+            faqQuestions.forEach(question => {
+                question.addEventListener('click', () => {
+                    const answer = question.nextElementSibling;
+                    question.classList.toggle('active');
+                    answer.classList.toggle('open');
+
+                    if (answer.classList.contains('open')) {
+                        answer.style.maxHeight = answer.scrollHeight + "px";
+                    } else {
+                        answer.style.maxHeight = "0";
+                    }
+                });
+            });
         });
     </script>
 </body>
