@@ -682,6 +682,54 @@
         #main-faq-content.open {
             max-height: 1000px; /* Large enough to contain all FAQ items */
         }
+        /* New Accordion Styles for AFA Bundle Section */
+        .afa-accordion-item {
+            border-bottom: 1px solid #e2e8f0;
+            padding: 0.5rem 0;
+        }
+
+        .afa-accordion-item:last-child {
+            border-bottom: none;
+        }
+
+        .afa-accordion-toggle {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            padding: 0.75rem 0;
+            font-size: 1.125rem; /* text-lg */
+            font-weight: 600;
+            color: #1f2937;
+            cursor: pointer;
+            background: none;
+            border: none;
+            text-align: left;
+        }
+
+        .afa-accordion-toggle .icon {
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .afa-accordion-toggle.active .icon {
+            transform: rotate(180deg);
+        }
+
+        .afa-accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease-in-out;
+            padding: 0 0.75rem; /* Indent the answer */
+            color: #4a5568;
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+
+        .afa-accordion-content.open {
+            max-height: 500px; /* Adjust as needed to fit content */
+            padding-top: 0.5rem;
+            padding-bottom: 1rem;
+        }
     </style>
 </head>
 <body>
@@ -943,7 +991,7 @@
             </div>
 
             <div id="dashboard-content-area">
-                <div class="dashboard-nav-buttons flex flex-wrap justify-center gap-4 mb-8">
+                <div class="dashboard-nav-buttons grid grid-cols-2 sm:grid-cols-4 gap-4 mb-8">
                     <button id="order-placement-btn" class="active">
                         <i class="fas fa-shopping-cart"></i> Order Data
                     </button>
@@ -1024,24 +1072,39 @@
                 <!-- New AFA Call Bundle Section -->
                 <section id="afa-bundle-section" class="hidden">
                     <div class="p-6 md:p-8">
-                        <h3 class="text-xl font-bold mb-2">How to Purchase MTN AFA Bundle after Registration:</h3>
-                        <ol class="list-decimal list-inside space-y-1">
-                            <li>Dial *1848#</li>
-                            <li>Select option 1 to Buy AFA bundle</li>
-                            <li>Choose between (AFA bundle or AFA+Data)</li>
-                            <li>Select Option to Confirm</li>
-                            <li>Enter MoMo PIN and approve payment for the service</li>
-                            <li>You will receive both SMS notifications from MTN and MoMo.</li>
-                        </ol>
+                        <div class="afa-accordion-item">
+                            <button class="afa-accordion-toggle" id="afa-purchase-toggle">
+                                How to Purchase MTN AFA Bundle after Registration
+                                <i class="fas fa-chevron-down icon"></i>
+                            </button>
+                            <div class="afa-accordion-content" id="afa-purchase-content">
+                                <ol class="list-decimal list-inside space-y-1">
+                                    <li>Dial *1848#</li>
+                                    <li>Select option 1 to Buy AFA bundle</li>
+                                    <li>Choose (Monthly no data bundle)</li> <!-- Changed text -->
+                                    <li>Select Option to Confirm</li>
+                                    <li>Enter MoMo PIN and approve payment for the service</li>
+                                    <li>You will receive both SMS notifications from MTN and MoMo.</li>
+                                </ol>
+                            </div>
+                        </div>
 
-                        <h3 class="text-xl font-bold mb-2 mt-4">Benefits of AFA Bundle:</h3>
-                        <ul class="list-disc list-inside space-y-1">
-                            <li>250 minutes to MTN numbers</li>
-                            <li>30 minutes to other networks</li>
-                            <li>500 minutes to other registered AFA numbers</li>
-                            <li>SMS to all networks</li>
-                        </ul>
+                        <div class="afa-accordion-item mt-4">
+                            <button class="afa-accordion-toggle" id="afa-benefits-toggle">
+                                Benefits of AFA Bundle
+                                <i class="fas fa-chevron-down icon"></i>
+                            </button>
+                            <div class="afa-accordion-content" id="afa-benefits-content">
+                                <ul class="list-disc list-inside space-y-1">
+                                    <li>250 minutes to MTN numbers</li>
+                                    <li>30 minutes to other networks</li>
+                                    <li>500 minutes to other registered AFA numbers</li>
+                                    <li>SMS to all networks</li>
+                                </ul>
+                            </div>
+                        </div>
                         
+                        <h3 class="text-xl font-bold mb-2 mt-8 text-center uppercase">REGISTER YOUR NUMBER</h3> <!-- New Header with margin-top and centered -->
                         <form id="afaRegistrationForm" class="space-y-6">
                             <div>
                                 <label for="afa-full-name" class="block text-sm font-medium text-gray-700 mb-1">Full Name<span class="text-red-500">*</span>: </label>
@@ -1169,10 +1232,10 @@
         document.addEventListener('DOMContentLoaded', () => {
             // New prices provided by the user
             const rawPrices = {
-                "1GB": "6Ghc", "2GB": "11.50Ghc", "3GB": "16.50Ghc", "4GB": "22Ghc",
-                "5GB": "26.50Ghc", "6GB": "31.50Ghc", "8GB": "41.50Ghc", "10GB": "49Ghc",
-                "15GB": "72Ghc", "20GB": "95Ghc", "30GB": "143Ghc", "50GB": "220Ghc",
-                "100GB": "425Ghc"
+                "1GB": "5.50Ghc", "2GB": "10.50Ghc", "3GB": "15Ghc", "4GB": "21Ghc",
+                "5GB": "25Ghc", "6GB": "29Ghc", "8GB": "38Ghc", "10GB": "45Ghc",
+                "15GB": "68Ghc", "20GB": "89Ghc", "30GB": "127.00Ghc", "50GB": "210.00Ghc",
+                "100GB": "408.00Ghc"
             };
 
             // Convert rawPrices to the existing dataBundles format for all networks
@@ -1252,6 +1315,12 @@
 
             const afaRegistrationForm = document.getElementById('afaRegistrationForm'); // New AFA registration form
             const afaMessageBox = document.getElementById('afa-message-box'); // New AFA message box
+
+            // AFA Accordion elements
+            const afaPurchaseToggle = document.getElementById('afa-purchase-toggle');
+            const afaPurchaseContent = document.getElementById('afa-purchase-content');
+            const afaBenefitsToggle = document.getElementById('afa-benefits-toggle');
+            const afaBenefitsContent = document.getElementById('afa-benefits-content');
 
 
             const mobileMenuButton = document.getElementById('mobile-menu-button');
@@ -1677,7 +1746,7 @@
                             
                             // 6. Send data to Google Apps Script (this can be fire-and-forget or await)
                             // Keeping it await for robustness, but it won't block the UI switch
-                            const GOOGLE_APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwKwu8XC1awByHKIjz86leYi/exec'; // Corrected Apps Script URL
+                            const GOOGLE_APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwKwu8XC1awByOIwiTXGGY7iMr1J_vNSrZ1tUv7tPY-Edlzvrs5H1SWyHKIjz86leYi/exec'; // Corrected Apps Script URL
 
                             try {
                                 const scriptResponse = await fetch(GOOGLE_APPS_SCRIPT_URL, {
@@ -1737,6 +1806,9 @@
                 afaBundleBtn.classList.remove('active'); // Remove active from AFA button
                 accountSettingsBtn.classList.remove('active');
 
+                // Close all AFA accordions when switching views
+                closeAllAfaAccordions();
+
                 if (view === 'order-placement') {
                     orderPlacementSection.classList.remove('hidden');
                     orderPlacementBtn.classList.add('active');
@@ -1749,9 +1821,11 @@
                 } else if (view === 'my-orders') {
                     myOrdersSection.classList.remove('hidden');
                     myOrdersBtn.classList.add('active');
-                    renderOrders();
-                    ordersList.classList.add('hidden');
-                    toggleOrdersDisplayButton.textContent = 'Show My Orders';
+                    updateOrderStats(); // Refresh stats for 'My Orders'
+                    renderOrders(); // Render orders for 'My Orders'
+                    // The toggle button will control visibility, so no explicit hidden/shown here
+                    ordersList.classList.add('hidden'); // Start hidden, let button reveal
+                    toggleOrdersDisplayButton.textContent = 'Show My Orders'; // Reset button text
                 } else if (view === 'afa-bundle') { // Handle new AFA bundle view
                     afaBundleSection.classList.remove('hidden');
                     afaBundleBtn.classList.add('active');
@@ -1788,7 +1862,7 @@
 
                 displayAfaMessage('Initiating AFA bundle registration payment...', 'info');
 
-                const AFA_BUNDLE_PRICE = 15.00; // Fixed price for AFA bundle, changed to 15.00
+                const AFA_BUNDLE_PRICE = 10.00; // Fixed price for AFA bundle, changed to 10.00
                 const handler = PaystackPop.setup({
                     key: 'pk_live_8e753f43f8defed950965395fc04f5dc7ab1035b', // Your actual public key
                     email: registeredUserEmail,
@@ -1886,10 +1960,12 @@
 
                 if (ordersToDisplay.length === 0) {
                     noOrdersMessage.classList.remove('hidden');
-                    toggleOrdersDisplayButton.classList.add('hidden');
+                    ordersList.classList.add('hidden'); // Ensure orders list is hidden if no orders
+                    toggleOrdersDisplayButton.classList.add('hidden'); // Hide the toggle button as well
                 } else {
                     noOrdersMessage.classList.add('hidden');
-                    toggleOrdersDisplayButton.classList.remove('hidden');
+                    toggleOrdersDisplayButton.classList.remove('hidden'); // Show the toggle button
+                    // Do not add/remove 'hidden' from ordersList here; let the toggle button handle it initially
                     ordersToDisplay.forEach(order => {
                         const orderItem = document.createElement('div');
                         orderItem.classList.add('shadow-sm', 'border-gray-200');
@@ -1909,6 +1985,7 @@
                             statusClass = 'status-unknown';
                         }
 
+                        let orderContent = '';
                         if (order.type === 'data') {
                             orderContent = `
                                 <p><strong>Service Type:</strong> Data Bundle</p>
@@ -2095,12 +2172,19 @@
                 const isClickInsideAgent = agentMessageContainer.contains(event.target) || mobileAgentLink.contains(event.target);
                 const isClickInsideMobileMenuButton = mobileMenuButton.contains(event.target);
                 const isClickInsideMobileMenu = mobileMenu.contains(event.target);
+                // For AFA accordion
+                const isClickInsideAfaSection = afaBundleSection.contains(event.target);
+
 
                 if (!isClickInsideAgent && agentMessageContainer.classList.contains('show')) {
                     agentMessageContainer.classList.remove('show');
                 }
                 if (!isClickInsideMobileMenuButton && !isClickInsideMobileMenu && mobileMenu.classList.contains('open')) {
                     mobileMenu.classList.remove('open');
+                }
+                // Close AFA accordions if clicking outside the AFA section
+                if (!isClickInsideAfaSection) {
+                    closeAllAfaAccordions();
                 }
             });
 
@@ -2112,37 +2196,6 @@
                 agentMessageContainer.classList.remove('show');
             });
             
-            // --- Google Sign-in ---
-            // googleSignInButton.addEventListener('click', async () => {
-            //     displayMessage('Signing in with Google...', 'info');
-            //     const provider = new firebase.auth.GoogleAuthProvider();
-            //     try {
-            //         await auth.signInWithPopup(provider);
-            //         // onAuthStateChanged listener will handle showing the main app
-            //         messageBox.classList.add('hidden');
-            //     } catch (error) {
-            //         console.error("Google Sign In Error:", error);
-            //         displayMessage(`Google Sign In Failed: ${error.message}`, 'error');
-            //     }\
-            // });
-
-            // --- Apple Sign-in ---
-            // appleSignInButton.addEventListener('click', async () => {
-            //     displayMessage('Signing in with Apple...', 'info');
-            //     const provider = new firebase.auth.OAuthProvider('apple.com');
-            //     // Request email and name scopes
-            //     provider.addScope('email');
-            //     provider.addScope('name');
-            //     try {
-            //         await auth.signInWithPopup(provider);
-            //         // onAuthStateChanged listener will handle showing the main app
-            //         messageBox.classList.add('hidden');
-            //     } catch (error) {
-            //         console.error("Apple Sign In Error:", error);
-            //         displayMessage(`Apple Sign In Failed: ${error.message}`, 'error');
-            //     }
-            // });
-
             // --- Password Toggle Functionality ---
             function setupPasswordToggle(passwordInputId, toggleButtonId) {
                 const passwordInput = document.getElementById(passwordInputId);
@@ -2193,6 +2246,48 @@
                         answer.style.maxHeight = "0";
                     }
                 });
+            });
+
+            // --- AFA Accordion Logic ---
+            function toggleAfaAccordion(toggleButton, contentElement) {
+                const isOpen = contentElement.classList.contains('open');
+
+                // Close all other AFA accordions first
+                closeAllAfaAccordions(toggleButton);
+
+                if (!isOpen) {
+                    contentElement.classList.add('open');
+                    toggleButton.classList.add('active');
+                    contentElement.style.maxHeight = contentElement.scrollHeight + "px";
+                } else {
+                    contentElement.classList.remove('open');
+                    toggleButton.classList.remove('active');
+                    contentElement.style.maxHeight = "0";
+                }
+            }
+
+            function closeAllAfaAccordions(excludeButton = null) {
+                const allAfaToggles = document.querySelectorAll('.afa-accordion-toggle');
+                allAfaToggles.forEach(toggle => {
+                    if (toggle !== excludeButton) {
+                        const content = toggle.nextElementSibling;
+                        if (content && content.classList.contains('open')) {
+                            content.classList.remove('open');
+                            toggle.classList.remove('active');
+                            content.style.maxHeight = "0";
+                        }
+                    }
+                });
+            }
+
+            afaPurchaseToggle.addEventListener('click', (event) => {
+                event.stopPropagation(); // Prevent global click from immediately closing
+                toggleAfaAccordion(afaPurchaseToggle, afaPurchaseContent);
+            });
+
+            afaBenefitsToggle.addEventListener('click', (event) => {
+                event.stopPropagation(); // Prevent global click from immediately closing
+                toggleAfaAccordion(afaBenefitsToggle, afaBenefitsContent);
             });
         });
     </script>
