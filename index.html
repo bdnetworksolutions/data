@@ -392,8 +392,8 @@
             justify-content: flex-start;
         }
         #mobile-menu.open {
-            opacity: 1; /* Fade in */
-            visibility: visible; /* Make visible */
+            opacity: 1;
+            visibility: visible;
             /* No transform needed for a fade-in dropdown */
         }
         #mobile-menu a {
@@ -452,7 +452,8 @@
         /* Order sections within dashboard (this is the order page itself) */
         #order-placement-section,
         #my-orders-section,
-        #account-settings-section { /* Applied to account settings too for consistency */
+        #account-settings-section,
+        #afa-bundle-section { /* Added AFA bundle section here */
             background-color: #f9fafb; /* Light background for content sections */
             border: 1px solid #e5e7eb;
             border-radius: 8px;
@@ -509,6 +510,8 @@
         .status-delivered { color: #10b981; } /* Green */
         .status-cancelled { color: #ef4444; } /* Red */
         .status-unknown { color: #6b7280; } /* Gray */
+        .status-registered { color: #8a2be2; } /* Purple for AFA Registered - Kept for flexibility, though not directly used for status now */
+
 
         /* Mobile-specific font size adjustments for auth-title */
         #auth-title {
@@ -947,6 +950,9 @@
                     <button id="my-orders-btn">
                         <i class="fas fa-history"></i> My Orders
                     </button>
+                    <button id="afa-bundle-btn"> <!-- New AFA Bundle Button -->
+                        <i class="fas fa-phone-alt"></i> AFA Call Bundle
+                    </button>
                     <button id="account-settings-btn">
                         <i class="fas fa-user-cog"></i> Account
                     </button>
@@ -1014,6 +1020,57 @@
                         </div>
                     </div>
                 </section>
+
+                <!-- New AFA Call Bundle Section -->
+                <section id="afa-bundle-section" class="hidden">
+                    <div class="p-6 md:p-8">
+                        <h3 class="text-xl font-bold mb-2">How to Purchase MTN AFA Bundle after Registration:</h3>
+                        <ol class="list-decimal list-inside space-y-1">
+                            <li>Dial *1848#</li>
+                            <li>Select option 1 to Buy AFA bundle</li>
+                            <li>Choose between (AFA bundle or AFA+Data)</li>
+                            <li>Select Option to Confirm</li>
+                            <li>Enter MoMo PIN and approve payment for the service</li>
+                            <li>You will receive both SMS notifications from MTN and MoMo.</li>
+                        </ol>
+
+                        <h3 class="text-xl font-bold mb-2 mt-4">Benefits of AFA Bundle:</h3>
+                        <ul class="list-disc list-inside space-y-1">
+                            <li>250 minutes to MTN numbers</li>
+                            <li>30 minutes to other networks</li>
+                            <li>500 minutes to other registered AFA numbers</li>
+                            <li>SMS to all networks</li>
+                        </ul>
+                        
+                        <form id="afaRegistrationForm" class="space-y-6">
+                            <div>
+                                <label for="afa-full-name" class="block text-sm font-medium text-gray-700 mb-1">Full Name<span class="text-red-500">*</span>: </label>
+                                <input type="text" id="afa-full-name" name="fullName" class="input-field block w-full" placeholder="Evelyn Esi Gyamfi" required>
+                            </div>
+                            <div>
+                                <label for="afa-ghana-card" class="block text-sm font-medium text-gray-700 mb-1">Ghana Card Number<span class="text-red-500">*</span>: </label>
+                                <input type="text" id="afa-ghana-card" name="ghanaCard" class="input-field block w-full" placeholder="GHA-000000000-0" required>
+                            </div>
+                            <div>
+                                <label for="afa-dob" class="block text-sm font-medium text-gray-700 mb-1">Date of Birth<span class="text-red-500">*</span>: </label>
+                                <input type="text" id="afa-dob" name="dob" class="input-field block w-full" placeholder="e.g., 10th March 1957" required>
+                            </div>
+                            <div>
+                                <label for="afa-location" class="block text-sm font-medium text-gray-700 mb-1">Location<span class="text-red-500">*</span>: </label>
+                                <input type="text" id="afa-location" name="location" class="input-field block w-full" placeholder="e.g., Kasoa, Central Region" required>
+                            </div>
+                            <div>
+                                <label for="afa-occupation" class="block text-sm font-medium text-gray-700 mb-1">Occupation<span class="text-red-500">*</span>: </label>
+                                <input type="text" id="afa-occupation" name="occupation" class="input-field block w-full" placeholder="e.g., Farmer" required>
+                            </div>
+                            <button type="submit" class="submit-button w-full py-2 px-4 rounded-md text-sm font-medium shadow-md transition-all duration-200 ease-in-out hover:shadow-lg">
+                                Register for AFA Bundle (GHS 15.00)
+                            </button>
+                        </form>
+                        <div id="afa-message-box" class="message-box info hidden mt-4"></div>
+                    </div>
+                </section>
+
 
                 <section id="account-settings-section" class="hidden">
                     <div class="p-6 md:p-8">
@@ -1113,7 +1170,7 @@
             // New prices provided by the user
             const rawPrices = {
                 "1GB": "6Ghc", "2GB": "11.50Ghc", "3GB": "16.50Ghc", "4GB": "22Ghc",
-                "5GB": "26.50Ghc", "6GB": "31.50Ghc", "8GB": "41Ghc", "10GB": "49.50Ghc",
+                "5GB": "26.50Ghc", "6GB": "31.50Ghc", "8GB": "41.50Ghc", "10GB": "49Ghc",
                 "15GB": "72Ghc", "20GB": "95Ghc", "30GB": "143Ghc", "50GB": "220Ghc",
                 "100GB": "425Ghc"
             };
@@ -1169,9 +1226,11 @@
 
             const orderPlacementBtn = document.getElementById('order-placement-btn');
             const myOrdersBtn = document.getElementById('my-orders-btn');
+            const afaBundleBtn = document.getElementById('afa-bundle-btn'); // New AFA Bundle Button
             const accountSettingsBtn = document.getElementById('account-settings-btn');
             const orderPlacementSection = document.getElementById('order-placement-section');
             const myOrdersSection = document.getElementById('my-orders-section');
+            const afaBundleSection = document.getElementById('afa-bundle-section'); // New AFA Bundle Section
             const accountSettingsSection = document.getElementById('account-settings-section');
 
             const userDisplay = document.getElementById('user-display');
@@ -1190,6 +1249,9 @@
             const newPasswordInput = document.getElementById('new-password');
             const confirmNewPasswordInput = document.getElementById('confirm-new-password');
             const accountMessageBox = document.getElementById('account-message-box');
+
+            const afaRegistrationForm = document.getElementById('afaRegistrationForm'); // New AFA registration form
+            const afaMessageBox = document.getElementById('afa-message-box'); // New AFA message box
 
 
             const mobileMenuButton = document.getElementById('mobile-menu-button');
@@ -1320,7 +1382,7 @@
                     signUpForm.classList.add('hidden');
                     forgotPasswordForm.classList.add('hidden');
                     authTitle.textContent = 'Sign In'; // Keep consistent title
-                    authSubtitle.innerHTML = 'Not a Member yet? <span class="auth-toggle-link text-blue-600 hover:text-blue-800 cursor-pointer" data-target="signup">Sign Up</span>'; // Changed text
+                    authSubtitle.innerHTML = 'Already a Member? <span class="auth-toggle-link text-blue-600 hover:text-blue-800 cursor-pointer" data-target="signin">Sign In</span>'; // Changed text
                 } catch (error) {
                     console.error("Sign Up Error:", error);
                     displayMessage(`Sign Up Failed: ${error.message}`, 'error');
@@ -1394,14 +1456,13 @@
                         await auth.sendPasswordResetEmail(resetEmail);
                         displayMessage(`If an account with ${resetEmail} exists, a password reset link has been sent. Please check your inbox.`, 'success');
                         resetEmailInput.value = '';
-                        setTimeout(() => {
-                            signInForm.classList.remove('hidden');
-                            signUpForm.classList.add('hidden');
-                            forgotPasswordForm.classList.add('hidden');
-                            authTitle.textContent = 'Sign In';
-                            authSubtitle.innerHTML = 'Not a Member yet? <span class="auth-toggle-link text-blue-600 hover:text-blue-800 cursor-pointer" data-target="signup">Sign Up</span>';
-                            messageBox.classList.add('hidden');
-                        }, 5000); // Redirect after 5 seconds
+                        // Removed setTimeout for immediate redirection
+                        signInForm.classList.remove('hidden');
+                        signUpForm.classList.add('hidden');
+                        forgotPasswordForm.classList.add('hidden');
+                        authTitle.textContent = 'Sign In';
+                        authSubtitle.innerHTML = 'Not a Member yet? <span class="auth-toggle-link text-blue-600 hover:text-blue-800 cursor-pointer" data-target="signup">Sign Up</span>';
+                        messageBox.classList.add('hidden');
                     }
                     catch (error) {
                         console.error("Password Reset Error:", error);
@@ -1423,6 +1484,12 @@
                 accountMessageBox.textContent = message;
                 accountMessageBox.className = `message-box ${type}`;
                 accountMessageBox.classList.remove('hidden');
+            }
+
+            function displayAfaMessage(message, type) {
+                afaMessageBox.textContent = message;
+                afaMessageBox.className = `message-box ${type}`;
+                afaMessageBox.classList.remove('hidden');
             }
 
 
@@ -1520,6 +1587,7 @@
                     }
 
                     ordersToProcess.push({
+                        type: 'data', // New property to distinguish order types
                         network: 'MTN', // Assuming MTN for all for now
                         bundleSize: dataSize,
                         bundlePrice: amount,
@@ -1574,10 +1642,42 @@
                         (async () => { // Immediately Invoked Async Function Expression (IIAFE)
                             const paymentReference = response.reference;
                             console.log('Paystack Payment Successful! Reference:', paymentReference);
-                            displayMessage('Payment successful! Logging order details...', 'success');
+                            
+                            // 1. Immediately switch to My Orders view
+                            switchDashboardView('my-orders');
+                            // 2. Display a success message (this message will appear on the 'My Orders' tab, replacing any previous messages)
+                            displayMessage('Payment successful! Your order has been placed and confirmed.', 'success');
 
-                            // --- Google Apps Script Integration (MOVED HERE) ---
-                            const GOOGLE_APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwKwu8XC1awByOIwiTXGGY7iMr1J_vNSrZ1tUv7tPY-Edlzvrs5H1SWyHKIjz86leYi/exec'; // Corrected Apps Script URL
+
+                            // 3. Update local storage with new orders
+                            ordersToProcess.forEach(order => {
+                                const newOrder = {
+                                    id: 'ORD' + Date.now() + '-' + Math.floor(Math.random() * 1000), // More unique ID
+                                    type: 'data', // Explicitly set type
+                                    network: order.network,
+                                    bundle: order.bundleSize,
+                                    price: order.bundlePrice,
+                                    phone: order.recipientPhone,
+                                    paymentReference: paymentReference, // Use the single Paystack reference for all related orders
+                                    date: new Date().toLocaleString(),
+                                    status: 'Submitted' // Changed from 'Processing' to 'Submitted'
+                                };
+                                currentOrders.push(newOrder);
+                            });
+                            localStorage.setItem(`userOrders_${currentUserUid}`, JSON.stringify(currentOrders));
+
+                            // 4. Update order stats and render orders on the newly switched view
+                            updateOrderStats();
+                            renderOrders(); // Re-render orders to show the new one immediately
+
+                            // 5. Reset order form (can happen in background as user is on 'My Orders')
+                            orderItemsContainer.innerHTML = ''; // Clear all existing items
+                            addOrderItem(); // Add a fresh, empty order item
+                            updateTotalAmount(); // Reset total amount display
+                            
+                            // 6. Send data to Google Apps Script (this can be fire-and-forget or await)
+                            // Keeping it await for robustness, but it won't block the UI switch
+                            const GOOGLE_APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwKwu8XC1awByHKIjz86leYi/exec'; // Corrected Apps Script URL
 
                             try {
                                 const scriptResponse = await fetch(GOOGLE_APPS_SCRIPT_URL, {
@@ -1600,35 +1700,13 @@
                                 });
 
                                 console.log('Order details sent to Google Apps Script. Response (if any, will be opaque due to no-cors):', scriptResponse);
-                                displayMessage('Order details successfully logged to spreadsheet.', 'success');
+                                // No need for a second displayMessage here, the first one is the "receipt"
 
                             } catch (error) {
                                 console.error('Error sending order details to Google Apps Script:', error);
-                                displayMessage('Payment successful, but failed to log order details to spreadsheet. Please contact support.', 'error');
+                                // If Apps Script fails, still inform user on the My Orders page
+                                displayMessage('Order logging failed. Please contact support. (Payment was successful)', 'error');
                             }
-
-                            // Update local storage and UI after successful payment and logging attempt
-                            ordersToProcess.forEach(order => {
-                                const newOrder = {
-                                    id: 'ORD' + Date.now() + '-' + Math.floor(Math.random() * 1000), // More unique ID
-                                    network: order.network,
-                                    bundle: order.bundleSize,
-                                    price: order.bundlePrice,
-                                    phone: order.recipientPhone,
-                                    paymentReference: paymentReference, // Use the single Paystack reference for all related orders
-                                    date: new Date().toLocaleString(),
-                                    status: 'Submitted' // Changed from 'Processing' to 'Submitted'
-                                };
-                                currentOrders.push(newOrder);
-                            });
-                            localStorage.setItem(`userOrders_${currentUserUid}`, JSON.stringify(currentOrders));
-
-                            // Reset form and switch view
-                            orderItemsContainer.innerHTML = ''; // Clear all existing items
-                            addOrderItem(); // Add a fresh, empty order item
-                            updateTotalAmount(); // Reset total amount display
-                            switchDashboardView('my-orders');
-                            updateOrderStats();
                         })(); // End of IIAFE
                     },
                     onClose: function(){ // Payment modal closed callback
@@ -1642,16 +1720,21 @@
             // --- Dashboard Navigation ---
             orderPlacementBtn.addEventListener('click', () => switchDashboardView('order-placement'));
             myOrdersBtn.addEventListener('click', () => switchDashboardView('my-orders'));
+            afaBundleBtn.addEventListener('click', () => switchDashboardView('afa-bundle')); // New AFA Bundle Button Listener
             accountSettingsBtn.addEventListener('click', () => switchDashboardView('account-settings'));
 
             function switchDashboardView(view) {
                 orderPlacementSection.classList.add('hidden');
                 myOrdersSection.classList.add('hidden');
+                afaBundleSection.classList.add('hidden'); // Hide new AFA section
                 accountSettingsSection.classList.add('hidden');
                 accountMessageBox.classList.add('hidden');
+                afaMessageBox.classList.add('hidden'); // Hide AFA message box
+
 
                 orderPlacementBtn.classList.remove('active');
                 myOrdersBtn.classList.remove('active');
+                afaBundleBtn.classList.remove('active'); // Remove active from AFA button
                 accountSettingsBtn.classList.remove('active');
 
                 if (view === 'order-placement') {
@@ -1669,6 +1752,11 @@
                     renderOrders();
                     ordersList.classList.add('hidden');
                     toggleOrdersDisplayButton.textContent = 'Show My Orders';
+                } else if (view === 'afa-bundle') { // Handle new AFA bundle view
+                    afaBundleSection.classList.remove('hidden');
+                    afaBundleBtn.classList.add('active');
+                    afaRegistrationForm.reset(); // Clear form on view switch
+                    afaMessageBox.classList.add('hidden'); // Ensure message box is hidden
                 } else if (view === 'account-settings') {
                     accountSettingsSection.classList.remove('hidden');
                     accountSettingsBtn.classList.add('active');
@@ -1677,15 +1765,124 @@
                 currentView = view;
             }
 
+            // --- AFA Call Bundle Registration Form Submission ---
+            afaRegistrationForm.addEventListener('submit', async (event) => {
+                event.preventDefault();
+
+                if (!currentUserUid) {
+                    displayAfaMessage('You must be signed in to register for AFA Bundle.', 'error');
+                    showAuthForms();
+                    return;
+                }
+
+                const fullName = document.getElementById('afa-full-name').value.trim();
+                const ghanaCard = document.getElementById('afa-ghana-card').value.trim();
+                const dob = document.getElementById('afa-dob').value.trim();
+                const location = document.getElementById('afa-location').value.trim();
+                const occupation = document.getElementById('afa-occupation').value.trim();
+
+                if (!fullName || !ghanaCard || !dob || !location || !occupation) {
+                    displayAfaMessage('Please fill in all required fields.', 'error');
+                    return;
+                }
+
+                displayAfaMessage('Initiating AFA bundle registration payment...', 'info');
+
+                const AFA_BUNDLE_PRICE = 15.00; // Fixed price for AFA bundle, changed to 15.00
+                const handler = PaystackPop.setup({
+                    key: 'pk_live_8e753f43f8defed950965395fc04f5dc7ab1035b', // Your actual public key
+                    email: registeredUserEmail,
+                    amount: AFA_BUNDLE_PRICE * 100, // Amount in kobo/pesewas
+                    currency: 'GHS',
+                    ref: 'AFA_' + Date.now(), // Unique reference for AFA bundle
+                    firstname: registeredUserName.split(' ')[0] || '',
+                    lastname: registeredUserName.split(' ').slice(1).join(' ') || '',
+                    metadata: {
+                        custom_fields: [
+                            { display_name: "Customer ID", variable_name: "customer_id", value: currentUserUid },
+                            { display_name: "Service Type", variable_name: "service_type", value: "AFA Call Bundle" },
+                            { display_name: "Full Name", variable_name: "full_name", value: fullName },
+                            { display_name: "Ghana Card", variable_name: "ghana_card", value: ghanaCard },
+                            { display_name: "Date of Birth", variable_name: "date_of_birth", value: dob },
+                            { display_name: "Location", variable_name: "location", value: location },
+                            { display_name: "Occupation", variable_name: "occupation", value: occupation }
+                        ]
+                    },
+                    callback: function(response) {
+                        (async () => {
+                            const paymentReference = response.reference;
+                            console.log('Paystack Payment Successful for AFA Bundle! Reference:', paymentReference);
+
+                            // 1. Immediately switch to My Orders view
+                            switchDashboardView('my-orders');
+                            // 2. Display a success message
+                            displayMessage('AFA Call Bundle registration successful! Your request has been confirmed.', 'success');
+
+                            // 3. Update local storage with new AFA order
+                            const newAfaOrder = {
+                                id: 'AFA' + Date.now() + '-' + Math.floor(Math.random() * 1000), // Unique ID
+                                type: 'afa_bundle', // Explicitly set type for AFA orders
+                                serviceType: 'AFA Call Bundle',
+                                price: AFA_BUNDLE_PRICE,
+                                paymentReference: paymentReference,
+                                date: new Date().toLocaleString(),
+                                status: 'Submitted', // Changed from 'Registered' to 'Submitted'
+                                details: { fullName, ghanaCard, dob, location, occupation }
+                            };
+                            currentOrders.push(newAfaOrder);
+                            localStorage.setItem(`userOrders_${currentUserUid}`, JSON.stringify(currentOrders));
+
+                            // 4. Update order stats and render orders on the newly switched view
+                            updateOrderStats();
+                            renderOrders(); // Re-render orders to show the new AFA entry
+
+                            // 5. Reset form (can happen in background as user is on 'My Orders')
+                            afaRegistrationForm.reset();
+
+                            // 6. Send data to Google Apps Script (same URL, but with different payload structure)
+                            const GOOGLE_APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwKwu8XC1awByOIwiTXGGY7iMr1J_vNSrZ1tUv7tPY-Edlzvrs5H1SWyHKIjz86leYi/exec';
+
+                            try {
+                                const scriptResponse = await fetch(GOOGLE_APPS_SCRIPT_URL, {
+                                    method: 'POST',
+                                    mode: 'no-cors',
+                                    cache: 'no-cache',
+                                    headers: { 'Content-Type': 'application/json' },
+                                    body: JSON.stringify({
+                                        customerName: registeredUserName,
+                                        customerEmail: registeredUserEmail,
+                                        customerId: currentUserUid,
+                                        afaRegistration: newAfaOrder // Send the whole AFA order object
+                                    })
+                                });
+                                console.log('AFA registration details sent to Google Apps Script:', scriptResponse);
+                            } catch (error) {
+                                console.error('Error sending AFA registration details to Google Apps Script:', error);
+                                displayMessage('AFA registration successful, but failed to log details. Please contact support.', 'error');
+                            }
+                        })();
+                    },
+                    onClose: function() {
+                        displayAfaMessage('AFA Call Bundle registration cancelled.', 'info');
+                    }
+                });
+                handler.openIframe();
+            });
+
+
             // --- My Orders Section Logic ---
             function updateOrderStats() {
-                totalOrdersSpan.textContent = currentOrders.filter(order => order.status !== 'Delivered').length;
-                submittedOrdersSpan.textContent = currentOrders.filter(order => order.status === 'Submitted' || order.status === 'Processing').length;
+                // Update total orders and pending orders for both data and AFA bundles
+                totalOrdersSpan.textContent = currentOrders.length;
+                submittedOrdersSpan.textContent = currentOrders.filter(order =>
+                    order.status === 'Submitted' || order.status === 'Processing' // Removed 'Registered' here as it's now 'Submitted'
+                ).length;
             }
 
             function renderOrders() {
                 ordersList.innerHTML = '';
-                const ordersToDisplay = currentOrders.filter(order => order.status !== 'Delivered');
+                // Display all orders (data and AFA)
+                const ordersToDisplay = currentOrders.slice().sort((a, b) => new Date(b.date) - new Date(a.date));
 
                 if (ordersToDisplay.length === 0) {
                     noOrdersMessage.classList.remove('hidden');
@@ -1693,34 +1890,52 @@
                 } else {
                     noOrdersMessage.classList.add('hidden');
                     toggleOrdersDisplayButton.classList.remove('hidden');
-                    ordersToDisplay.sort((a, b) => new Date(b.date) - new Date(a.date));
                     ordersToDisplay.forEach(order => {
                         const orderItem = document.createElement('div');
                         orderItem.classList.add('shadow-sm', 'border-gray-200');
                         let statusClass = '';
                         let displayStatus = order.status;
 
-                        if (order.status === 'Submitted') {
+                        if (order.status === 'Submitted') { // Now applies to both data and AFA
                             statusClass = 'status-submitted';
                             displayStatus = 'Submitted';
                         } else if (order.status === 'Processing') {
                             statusClass = 'status-processing';
+                        } else if (order.status === 'Delivered') {
+                            statusClass = 'status-delivered';
                         } else if (order.status === 'Cancelled') {
                             statusClass = 'status-cancelled';
                         } else {
                             statusClass = 'status-unknown';
                         }
 
+                        if (order.type === 'data') {
+                            orderContent = `
+                                <p><strong>Service Type:</strong> Data Bundle</p>
+                                <p><strong>Network:</strong> ${order.network}</p>
+                                <p><strong>Bundle:</strong> ${order.bundle}</p>
+                                <p><strong>Price:</strong> GHS ${order.price.toFixed(2)}</p>
+                                <p><strong>Phone:</strong> ${order.phone}</p>
+                            `;
+                        } else if (order.type === 'afa_bundle' && order.details) {
+                            orderContent = `
+                                <p><strong>Service Type:</strong> AFA Call Bundle</p>
+                                <p><strong>Registration Fee:</strong> GHS ${order.price.toFixed(2)}</p>
+                                <p><strong>Full Name:</strong> ${order.details.fullName}</p>
+                                <p><strong>Ghana Card:</strong> ${order.details.ghanaCard}</p>
+                                <p><strong>Date of Birth:</strong> ${order.details.dob}</p>
+                                <p><strong>Location:</strong> ${order.details.location}</p>
+                                <p><strong>Occupation:</strong> ${order.details.occupation}</p>
+                            `;
+                        }
+
                         orderItem.innerHTML = `
                             <p><strong>Order ID:</strong> ${order.id}</p>
-                            <p><strong>Network:</strong> ${order.network}</p>
-                            <p><strong>Bundle:</strong> ${order.bundle}</p>
-                            <p><strong>Price:</strong> GHS ${order.price.toFixed(2)}</p>
-                            <p><strong>Phone:</strong> ${order.phone}</p>
+                            ${orderContent}
                             <p><strong>Reference:</strong> ${order.paymentReference || 'N/A'}</p>
                             <p><strong>Date:</strong> ${order.date}</p>
                             <p><strong>Status:</strong> <span class="${statusClass}">${displayStatus}</span></p>
-                            `;
+                        `;
                         ordersList.appendChild(orderItem);
                     });
                 }
