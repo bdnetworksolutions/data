@@ -1110,6 +1110,11 @@
                                 <label for="afa-full-name" class="block text-sm font-medium text-gray-700 mb-1">Full Name<span class="text-red-500">*</span>: </label>
                                 <input type="text" id="afa-full-name" name="fullName" class="input-field block w-full" placeholder="Evelyn Esi Gyamfi" required>
                             </div>
+                            <!-- New Phone Number Field -->
+                            <div>
+                                <label for="afa-phone-number" class="block text-sm font-medium text-gray-700 mb-1">Phone Number<span class="text-red-500">*</span>: </label>
+                                <input type="tel" id="afa-phone-number" name="phoneNumber" class="input-field block w-full" placeholder="e.g., 0540000000" required>
+                            </div>
                             <div>
                                 <label for="afa-ghana-card" class="block text-sm font-medium text-gray-700 mb-1">Ghana Card Number<span class="text-red-500">*</span>: </label>
                                 <input type="text" id="afa-ghana-card" name="ghanaCard" class="input-field block w-full" placeholder="GHA-000000000-0" required>
@@ -1232,10 +1237,10 @@
         document.addEventListener('DOMContentLoaded', () => {
             // New prices provided by the user
             const rawPrices = {
-                "1GB": "6Ghc", "2GB": "11.50Ghc", "3GB": "16.50Ghc", "4GB": "22Ghc",
-                "5GB": "26.50Ghc", "6GB": "31.50Ghc", "8GB": "41Ghc", "10GB": "49.50Ghc",
-                "15GB": "72Ghc", "20GB": "95Ghc", "30GB": "143.00Ghc", "50GB": "220.00Ghc",
-                "100GB": "425.00Ghc"
+                "1GB": "5.50Ghc", "2GB": "10.50Ghc", "3GB": "15Ghc", "4GB": "21Ghc",
+                "5GB": "25Ghc", "6GB": "29Ghc", "8GB": "38Ghc", "10GB": "45Ghc",
+                "15GB": "68Ghc", "20GB": "89Ghc", "30GB": "127.00Ghc", "50GB": "210.00Ghc",
+                "100GB": "408.00Ghc"
             };
 
             // Convert rawPrices to the existing dataBundles format for all networks
@@ -1315,6 +1320,8 @@
 
             const afaRegistrationForm = document.getElementById('afaRegistrationForm'); // New AFA registration form
             const afaMessageBox = document.getElementById('afa-message-box'); // New AFA message box
+            const afaPhoneNumberInput = document.getElementById('afa-phone-number'); // New AFA phone number input
+
 
             // AFA Accordion elements
             const afaPurchaseToggle = document.getElementById('afa-purchase-toggle');
@@ -1850,19 +1857,20 @@
                 }
 
                 const fullName = document.getElementById('afa-full-name').value.trim();
+                const phoneNumber = afaPhoneNumberInput.value.trim(); // Get the new phone number
                 const ghanaCard = document.getElementById('afa-ghana-card').value.trim();
                 const dob = document.getElementById('afa-dob').value.trim();
                 const location = document.getElementById('afa-location').value.trim();
                 const occupation = document.getElementById('afa-occupation').value.trim();
 
-                if (!fullName || !ghanaCard || !dob || !location || !occupation) {
+                if (!fullName || !phoneNumber || !ghanaCard || !dob || !location || !occupation) {
                     displayAfaMessage('Please fill in all required fields.', 'error');
                     return;
                 }
 
                 displayAfaMessage('Initiating AFA bundle registration payment...', 'info');
 
-                const AFA_BUNDLE_PRICE = 15.00; // Fixed price for AFA bundle, changed to 15.00
+                const AFA_BUNDLE_PRICE = 10.00; // Fixed price for AFA bundle, changed to 10.00
                 const handler = PaystackPop.setup({
                     key: 'pk_live_8e753f43f8defed950965395fc04f5dc7ab1035b', // Your actual public key
                     email: registeredUserEmail,
@@ -1876,6 +1884,7 @@
                             { display_name: "Customer ID", variable_name: "customer_id", value: currentUserUid },
                             { display_name: "Service Type", variable_name: "service_type", value: "AFA Call Bundle" },
                             { display_name: "Full Name", variable_name: "full_name", value: fullName },
+                            { display_name: "Phone Number", variable_name: "phone_number", value: phoneNumber }, // Include phone number
                             { display_name: "Ghana Card", variable_name: "ghana_card", value: ghanaCard },
                             { display_name: "Date of Birth", variable_name: "date_of_birth", value: dob },
                             { display_name: "Location", variable_name: "location", value: location },
@@ -1901,7 +1910,7 @@
                                 paymentReference: paymentReference,
                                 date: new Date().toLocaleString(),
                                 status: 'Submitted', // Changed from 'Registered' to 'Submitted'
-                                details: { fullName, ghanaCard, dob, location, occupation }
+                                details: { fullName, phoneNumber, ghanaCard, dob, location, occupation } // Include phone number
                             };
                             currentOrders.push(newAfaOrder);
                             localStorage.setItem(`userOrders_${currentUserUid}`, JSON.stringify(currentOrders));
@@ -1999,6 +2008,7 @@
                                 <p><strong>Service Type:</strong> AFA Call Bundle</p>
                                 <p><strong>Registration Fee:</strong> GHS ${order.price.toFixed(2)}</p>
                                 <p><strong>Full Name:</strong> ${order.details.fullName}</p>
+                                <p><strong>Phone Number:</strong> ${order.details.phoneNumber}</p> <!-- Display phone number -->
                                 <p><strong>Ghana Card:</strong> ${order.details.ghanaCard}</p>
                                 <p><strong>Date of Birth:</strong> ${order.details.dob}</p>
                                 <p><strong>Location:</strong> ${order.details.location}</p>
