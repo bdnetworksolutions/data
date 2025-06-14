@@ -1237,10 +1237,10 @@
         document.addEventListener('DOMContentLoaded', () => {
             // New prices provided by the user
             const rawPrices = {
-                "1GB": "5.50Ghc", "2GB": "10.50Ghc", "3GB": "15Ghc", "4GB": "21Ghc",
-                "5GB": "25Ghc", "6GB": "29Ghc", "8GB": "38Ghc", "10GB": "45Ghc",
-                "15GB": "68Ghc", "20GB": "89Ghc", "30GB": "127.00Ghc", "50GB": "210.00Ghc",
-                "100GB": "408.00Ghc"
+                "1GB": "6Ghc", "2GB": "11.50Ghc", "3GB": "16.50Ghc", "4GB": "22Ghc",
+                "5GB": "26.50Ghc", "6GB": "31.50Ghc", "8GB": "41Ghc", "10GB": "49.50Ghc",
+                "15GB": "72Ghc", "20GB": "95Ghc", "30GB": "143.00Ghc", "50GB": "220.00Ghc",
+                "100GB": "425.00Ghc"
             };
 
             // Convert rawPrices to the existing dataBundles format for all networks
@@ -1870,7 +1870,7 @@
 
                 displayAfaMessage('Initiating AFA bundle registration payment...', 'info');
 
-                const AFA_BUNDLE_PRICE = 10.00; // Fixed price for AFA bundle, changed to 10.00
+                const AFA_BUNDLE_PRICE = 15.00; // Fixed price for AFA bundle, changed to 15.00
                 const handler = PaystackPop.setup({
                     key: 'pk_live_8e753f43f8defed950965395fc04f5dc7ab1035b', // Your actual public key
                     email: registeredUserEmail,
