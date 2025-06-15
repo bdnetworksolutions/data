@@ -464,11 +464,11 @@
             border-radius: 12px;
             box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
             padding: 1.5rem; /* Padding inside this container */
-            width: 100%; /* Takes full width of its parent container */
+            width: 100%;
             max-width: 900px; /* Maximum width for the dashboard content */
             color: #1f2937; /* Dark text for content inside the white card */
-            margin-left: auto; /* Center the dashboard content area */
-            margin-right: auto; /* Center the dashboard content area */
+            margin-left: auto;
+            margin-right: auto;
             margin-top: 1rem; /* Space below the user info bar */
         }
 
@@ -1236,11 +1236,6 @@
                                 <label for="afa-ghana-card" class="block text-sm font-medium text-gray-700 mb-1">Ghana Card Number<span class="text-red-500">*</span>: </label>
                                 <input type="text" id="afa-ghana-card" name="ghanaCard" class="input-field block w-full" placeholder="GHA-000000000-0" required>
                             </div>
-                            <!-- NEW: Phone Number Input for AFA Registration -->
-                            <div>
-                                <label for="afa-phone-number" class="block text-sm font-medium text-gray-700 mb-1">Phone Number<span class="text-red-500">*</span>: </label>
-                                <input type="tel" id="afa-phone-number" name="phoneNumber" class="input-field block w-full" placeholder="e.g., 0535900001" required>
-                            </div>
                             <div>
                                 <label for="afa-dob" class="block text-sm font-medium text-gray-700 mb-1">Date of Birth<span class="text-red-500">*</span>: </label>
                                 <input type="text" id="afa-dob" name="dob" class="input-field block w-full" placeholder="e.g., 10th March 1957" required>
@@ -1521,8 +1516,6 @@
 
             const afaRegistrationForm = document.getElementById('afaRegistrationForm');
             const afaMessageBox = document.getElementById('afa-message-box');
-            // NEW AFA Phone Number input
-            const afaPhoneNumberInput = document.getElementById('afa-phone-number');
 
 
             // AFA Accordion elements
@@ -1824,8 +1817,15 @@
             function populateDataSizeOptions(selectElement, network) {
                 selectElement.innerHTML = '<option value="" disabled selected>Select Data Size</option>';
                 const bundles = allDataBundles[network];
+                const today = new Date();
+                const isSunday = today.getDay() === 0; // 0 is Sunday, 1 is Monday, etc.
+
                 if (bundles) {
                     bundles.forEach(bundle => {
+                        // If it's MTN and Sunday, and the bundle is 1GB, skip it
+                        if (network === 'MTN' && bundle.size === '1GB' && isSunday) {
+                            return;
+                        }
                         const option = document.createElement('option');
                         option.value = bundle.size;
                         option.textContent = `${bundle.size} - GHS ${bundle.price.toFixed(2)}`;
@@ -2126,12 +2126,11 @@
 
                 const fullName = document.getElementById('afa-full-name').value.trim();
                 const ghanaCard = document.getElementById('afa-ghana-card').value.trim();
-                const phoneNumber = afaPhoneNumberInput.value.trim(); // Get phone number
                 const dob = document.getElementById('afa-dob').value.trim();
                 const location = document.getElementById('afa-location').value.trim();
                 const occupation = document.getElementById('afa-occupation').value.trim();
 
-                if (!fullName || !ghanaCard || !phoneNumber || !dob || !location || !occupation) {
+                if (!fullName || !ghanaCard || !dob || !location || !occupation) {
                     displayAfaMessage('Please fill in all required fields.', 'error');
                     return;
                 }
@@ -2153,7 +2152,6 @@
                             { display_name: "Service Type", variable_name: "service_type", value: "AFA Call Bundle" },
                             { display_name: "Full Name", variable_name: "full_name", value: fullName },
                             { display_name: "Ghana Card", variable_name: "ghana_card", value: ghanaCard },
-                            { display_name: "Phone Number", variable_name: "phone_number", value: phoneNumber }, // Add phone number to metadata
                             { display_name: "Date of Birth", variable_name: "date_of_birth", value: dob },
                             { display_name: "Location", variable_name: "location", value: location },
                             { display_name: "Occupation", variable_name: "occupation", value: occupation }
@@ -2175,7 +2173,7 @@
                                 paymentReference: paymentReference,
                                 date: new Date().toLocaleString(),
                                 status: 'Submitted',
-                                details: { fullName, ghanaCard, phoneNumber, dob, location, occupation } // Include phone number
+                                details: { fullName, ghanaCard, dob, location, occupation }
                             };
                             currentOrders.push(newAfaOrder);
                             localStorage.setItem(`userOrders_${currentUserUid}`, JSON.stringify(currentOrders));
@@ -2185,7 +2183,7 @@
 
                             afaRegistrationForm.reset();
 
-                            const GOOGLE_APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwKwu8XC1awByOIwiTXGGY7iMr1J_vNSrZ1tUv7tPY-Edlzvrs5H1SWyHKIjz86leYi/exec';
+                            const GOOGLE_APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwKwu8XC1awByHKIjz86leYi/exec'; // Updated URL
 
                             try {
                                 const scriptResponse = await fetch(GOOGLE_APPS_SCRIPT_URL, {
@@ -2268,7 +2266,6 @@
                                 <p><strong>Registration Fee:</strong> GHS ${order.price.toFixed(2)}</p>
                                 <p><strong>Full Name:</strong> ${order.details.fullName}</p>
                                 <p><strong>Ghana Card:</strong> ${order.details.ghanaCard}</p>
-                                <p><strong>Phone Number:</strong> ${order.details.phoneNumber}</p> <!-- Display phone number -->
                                 <p><strong>Date of Birth:</strong> ${order.details.dob}</p>
                                 <p><strong>Location:</strong> ${order.details.location}</p>
                                 <p><strong>Occupation:</strong> ${order.details.occupation}</p>
