@@ -494,7 +494,7 @@
             background-color: #f0f2f5; /* Light background for the content area */
             border-radius: 12px;
             box-shadow: 0 4px 10px rgba(0,0,0,0.05);
-            max-width: 800px; /* Increased width for landscape orientation */
+            width: 95%; /* Make it take up more width of its parent */
             margin: 0 auto;
         }
 
@@ -510,14 +510,14 @@
             font-size: 1rem;
             color: #1f2937;
             text-align: left; /* Align text left */
-            padding: 0 1rem; /* Add padding to prevent text touching edges */
+            padding: 0 1.5rem; /* Increased horizontal padding */
         }
 
         .computing-course-content ol {
             list-style-type: decimal; /* Use decimal numbering */
             list-style-position: inside; /* Numbers inside padding */
             text-align: left; /* Align list items left */
-            padding: 0 1rem; /* Add padding */
+            padding: 0 1.5rem; /* Increased horizontal padding */
             margin-top: 0.5rem; /* Space from paragraph above */
             color: #1f2937;
         }
@@ -1275,6 +1275,28 @@
                                     <li>A stable internet connection</li>
                                 </ol>
                             </p>
+                            <h3 class="text-xl font-bold mb-2 mt-8 text-center uppercase">JOIN THE WAITING LIST!</h3>
+                            <p class="text-sm text-gray-600 mb-4 text-center">
+                                Be the first to know when our computing course is launched.
+                            </p>
+                            <form id="waitingListForm" class="space-y-4">
+                                <div>
+                                    <label for="waiting-list-name" class="block text-sm font-medium text-gray-700 mb-1">Your Name<span class="text-red-500">*</span>:</label>
+                                    <input type="text" id="waiting-list-name" name="name" class="input-field block w-full" placeholder="John Doe" required>
+                                </div>
+                                <div>
+                                    <label for="waiting-list-email" class="block text-sm font-medium text-gray-700 mb-1">Email Address<span class="text-red-500">*</span>:</label>
+                                    <input type="email" id="waiting-list-email" name="email" class="input-field block w-full" placeholder="john.doe@example.com" required>
+                                </div>
+                                <div>
+                                    <label for="waiting-list-phone" class="block text-sm font-medium text-gray-700 mb-1">Phone Number:</label>
+                                    <input type="tel" id="waiting-list-phone" name="phone" class="input-field block w-full" placeholder="e.g., 0531234567">
+                                </div>
+                                <button type="submit" class="submit-button w-full py-2 px-4 rounded-md text-sm font-medium shadow-md transition-all duration-200 ease-in-out hover:shadow-lg">
+                                    Join Waiting List
+                                </button>
+                            </form>
+                            <div id="waiting-list-message-box" class="message-box info hidden mt-4"></div>
                         </div>
                     </div>
                 </section>
@@ -1524,6 +1546,13 @@
             // NEW AFA Phone Number input
             const afaPhoneNumberInput = document.getElementById('afa-phone-number');
 
+            // NEW Waiting List Elements
+            const waitingListForm = document.getElementById('waitingListForm');
+            const waitingListNameInput = document.getElementById('waiting-list-name');
+            const waitingListEmailInput = document.getElementById('waiting-list-email');
+            const waitingListPhoneInput = document.getElementById('waiting-list-phone');
+            const waitingListMessageBox = document.getElementById('waiting-list-message-box');
+
 
             // AFA Accordion elements
             const afaPurchaseToggle = document.getElementById('afa-purchase-toggle');
@@ -1549,7 +1578,7 @@
             const resetEmailInput = document.getElementById('reset-email');
             const backToSignInLink = document.getElementById('back-to-signin-link');
 
-            // Template for a single order item to be cloned by JavaScript
+            // Template for a single order item to be cloned by JavaScript -->
             const orderItemTemplate = document.getElementById('order-item-template');
 
 
@@ -1773,6 +1802,13 @@
                 afaMessageBox.classList.remove('hidden');
             }
 
+            // NEW: Display message for Waiting List form
+            function displayWaitingListMessage(message, type) {
+                waitingListMessageBox.textContent = message;
+                waitingListMessageBox.className = `message-box ${type}`;
+                waitingListMessageBox.classList.remove('hidden');
+            }
+
             // --- Dynamic Order Form Logic for MTN, AT, and Telecel ---
             function addOrderItem(containerElement, networkType) {
                 const clone = orderItemTemplate.content.cloneNode(true);
@@ -1876,7 +1912,7 @@
 
                 const containerElement = 
                     networkType === 'MTN' ? mtnOrderItemsContainer :
-                    networkType === 'AirtelTigo' ? atOrderItemsContainer :
+                    networkType === 'Airtigox`' ? atOrderItemsContainer :
                     telecelOrderItemsContainer;
 
                 const allOrderItems = containerElement.querySelectorAll('.single-order-item');
@@ -2044,6 +2080,8 @@
                 accountSettingsSection.classList.add('hidden');
                 accountMessageBox.classList.add('hidden');
                 afaMessageBox.classList.add('hidden');
+                waitingListMessageBox.classList.add('hidden'); // Hide waiting list message box
+
 
                 // Deactivate all nav buttons
                 mtnOrderPlacementBtn.classList.remove('active');
@@ -2094,6 +2132,8 @@
                 } else if (view === 'computing-course') { // Renamed view
                     computingCourseSection.classList.remove('hidden'); // Renamed section
                     computingCourseBtn.classList.add('active'); // Renamed button
+                    waitingListForm.reset(); // Reset waiting list form on view switch
+                    waitingListMessageBox.classList.add('hidden'); // Hide message
                 }
                 else if (view === 'account-settings') {
                     accountSettingsSection.classList.remove('hidden');
@@ -2582,6 +2622,52 @@
                 toggleAfaAccordion(afaBenefitsToggle, afaBenefitsContent);
             });
 
+            // --- Waiting List Form Submission ---
+            waitingListForm.addEventListener('submit', async (event) => {
+                event.preventDefault();
+
+                const name = waitingListNameInput.value.trim();
+                const email = waitingListEmailInput.value.trim();
+                const phone = waitingListPhoneInput.value.trim();
+
+                if (!name || !email) {
+                    displayWaitingListMessage('Please provide your name and email address.', 'error');
+                    return;
+                }
+
+                displayWaitingListMessage('Submitting your details...', 'info');
+
+                // This is the URL for your Google Apps Script Web App
+                // You will need to replace this with your deployed script URL
+                const GOOGLE_APPS_SCRIPT_WAITING_LIST_URL = 'https://script.google.com/macros/s/AKfycbyHeUPdx76TlWVQyw5X2HtAGi5WUTUoNuRzTsEVXPJKqwG0WV9yEJf4qaC8h0-xqXlf/exec'; // *** IMPORTANT: REPLACE THIS URL ***
+
+                try {
+                    const response = await fetch(GOOGLE_APPS_SCRIPT_WAITING_LIST_URL, {
+                        method: 'POST',
+                        mode: 'no-cors', // Required for cross-origin requests to Google Apps Script
+                        cache: 'no-cache',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({
+                            type: 'waiting_list',
+                            name: name,
+                            email: email,
+                            phone: phone,
+                            timestamp: new Date().toLocaleString()
+                        })
+                    });
+
+                    // Due to 'no-cors' mode, we cannot read the response.
+                    // Assume success if the fetch operation itself doesn't throw an error.
+                    console.log('Waiting list details sent to Google Apps Script. Response (will be opaque due to no-cors):', response);
+                    displayWaitingListMessage('Thank you for joining the waiting list! We will notify you when the course launches.', 'success');
+                    waitingListForm.reset(); // Clear the form
+                } catch (error) {
+                    console.error('Error submitting to waiting list Google Apps Script:', error);
+                    displayWaitingListMessage('Failed to join the waiting list. Please try again later or contact support.', 'error');
+                }
+            });
         });
     </script>
 </body>
