@@ -487,16 +487,37 @@
             margin-top: 1.5rem; /* Space between the tab buttons and the order section / previous section */
         }
 
-        /* Styling for the new computer training curriculum display */
+        /* Styling for the new computing course curriculum display */
+        /* Changed from width: 95% to a more flexible width with max-width */
         .computing-course-content {
             text-align: center;
-            padding: 2rem;
             background-color: #f0f2f5; /* Light background for the content area */
             border-radius: 12px;
             box-shadow: 0 4px 10px rgba(0,0,0,0.05);
-            width: 95%; /* Make it take up more width of its parent */
+            /* New flexible width classes */
+            width: 100%;
+            max-width: 600px; /* Max width for the content itself within the section */
             margin: 0 auto;
+            padding: 1.5rem 1rem; /* Adjust padding for better look on small screens */
+            box-sizing: border-box; /* Include padding in element's total width */
         }
+        @media (min-width: 640px) { /* sm breakpoint */
+            .computing-course-content {
+                padding: 2rem; /* Restore larger padding on larger screens */
+                max-width: 700px;
+            }
+        }
+        @media (min-width: 768px) { /* md breakpoint */
+            .computing-course-content {
+                max-width: 800px;
+            }
+        }
+        @media (min-width: 1024px) { /* lg breakpoint */
+            .computing-course-content {
+                max-width: 900px; /* Aligns with dashboard content area max width */
+            }
+        }
+
 
         .computing-course-content img {
             max-width: 100%;
@@ -1236,7 +1257,7 @@
                                 <label for="afa-ghana-card" class="block text-sm font-medium text-gray-700 mb-1">Ghana Card Number<span class="text-red-500">*</span>: </label>
                                 <input type="text" id="afa-ghana-card" name="ghanaCard" class="input-field block w-full" placeholder="GHA-000000000-0" required>
                             </div>
-                            <!-- NEW: Phone Number Input for AFA Registration -->
+                            <!-- Phone Number Input for AFA Registration -->
                             <div>
                                 <label for="afa-phone-number" class="block text-sm font-medium text-gray-700 mb-1">Phone Number<span class="text-red-500">*</span>: </label>
                                 <input type="tel" id="afa-phone-number" name="phoneNumber" class="input-field block w-full" placeholder="e.g., 0535900001" required>
@@ -1265,6 +1286,7 @@
                 <section id="computing-course-section" class="hidden">
                     <div class="p-6 md:p-8">
                         <h2 class="text-2xl font-bold mb-4 text-center">Computing Course</h2>
+                        <!-- Applying the new width and padding classes for better responsiveness -->
                         <div class="computing-course-content">
                             <img src="https://placehold.co/600x400/FFD700/000000?text=LAUNCHING+SOON." alt="Computing Course Launching Soon">
                             <p>
@@ -1282,7 +1304,8 @@
                             <form id="waitingListForm" class="space-y-4">
                                 <div>
                                     <label for="waiting-list-name" class="block text-sm font-medium text-gray-700 mb-1">Your Name<span class="text-red-500">*</span>:</label>
-                                    <input type="text" id="waiting-list-name" name="name" class="input-field block w-full" placeholder="John Doe" required>
+                                    <!-- Updated placeholder for Name -->
+                                    <input type="text" id="waiting-list-name" name="name" class="input-field block w-full" placeholder="Derick Enciso" required>
                                 </div>
                                 <div>
                                     <label for="waiting-list-email" class="block text-sm font-medium text-gray-700 mb-1">Email Address<span class="text-red-500">*</span>:</label>
@@ -1290,7 +1313,8 @@
                                 </div>
                                 <div>
                                     <label for="waiting-list-phone" class="block text-sm font-medium text-gray-700 mb-1">Phone Number:</label>
-                                    <input type="tel" id="waiting-list-phone" name="phone" class="input-field block w-full" placeholder="e.g., 0531234567">
+                                    <!-- Placeholder for Phone Number already correct -->
+                                    <input type="tel" id="waiting-list-phone" name="phone" class="input-field block w-full" placeholder="0531234567">
                                 </div>
                                 <button type="submit" class="submit-button w-full py-2 px-4 rounded-md text-sm font-medium shadow-md transition-all duration-200 ease-in-out hover:shadow-lg">
                                     Join Waiting List
@@ -1543,10 +1567,10 @@
 
             const afaRegistrationForm = document.getElementById('afaRegistrationForm');
             const afaMessageBox = document.getElementById('afa-message-box');
-            // NEW AFA Phone Number input
+            // AFA Phone Number input
             const afaPhoneNumberInput = document.getElementById('afa-phone-number');
 
-            // NEW Waiting List Elements
+            // Waiting List Elements
             const waitingListForm = document.getElementById('waitingListForm');
             const waitingListNameInput = document.getElementById('waiting-list-name');
             const waitingListEmailInput = document.getElementById('waiting-list-email');
@@ -1802,7 +1826,7 @@
                 afaMessageBox.classList.remove('hidden');
             }
 
-            // NEW: Display message for Waiting List form
+            // Display message for Waiting List form
             function displayWaitingListMessage(message, type) {
                 waitingListMessageBox.textContent = message;
                 waitingListMessageBox.className = `message-box ${type}`;
@@ -2507,7 +2531,7 @@
                 const isClickInsideMobileMenuButton = mobileMenuButton.contains(event.target);
                 const isClickInsideMobileMenu = mobileMenu.contains(event.target);
                 const isClickInsideAfaSection = afaBundleSection.contains(event.target);
-                const isClickInsideComputingCourseSection = computingCourseSection.contains(event.target); // New: Check for Computing Course section
+                const isClickInsideComputingCourseSection = computingCourseSection.contains(event.target); // Check for Computing Course section
 
                 if (!isClickInsideAgent && agentMessageContainer.classList.contains('show')) {
                     agentMessageContainer.classList.remove('show');
