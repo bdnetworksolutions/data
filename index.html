@@ -1463,10 +1463,10 @@
 
             // Telecel Prices (single server)
             const telecelRawPrices = {
-                "5GB": 27.00,
-                "10GB": 50.00,
-                "15GB": 72.00,
-                "20GB": 97.00, "25GB": 120.00, "30GB": 140.00,
+                "5GB": 26.00,
+                "10GB": 48.00,
+                "15GB": 70.00,
+                "20GB": 95.00, "25GB": 120.00, "30GB": 140.00,
                 "35GB": 180.00, "40GB": 200.00, "45GB": 225.00
                 // 50GB and 100GB removed
             };
@@ -2044,7 +2044,7 @@
                 console.log('------------------------------');
 
                 const handler = PaystackPop.setup({
-                    key: 'pk_live_02c81b2fbc1460738f3c9bd599ad0aa656cd5a27',
+                    key: 'pk_live_67e25636b35278bfadbfdaa6fb8e4e0d77f2f105',
                     email: registeredUserEmail,
                     amount: totalPaymentAmount * 100,
                     currency: 'GHS',
@@ -2264,9 +2264,9 @@
 
                 displayAfaMessage('Initiating AFA bundle registration payment...', 'info');
 
-                const AFA_BUNDLE_PRICE = 15.00; // Fixed price for AFA bundle, changed to 15.00
+                const AFA_BUNDLE_PRICE = 17.00; // Fixed price for AFA bundle, changed to 15.00
                 const handler = PaystackPop.setup({
-                    key: 'pk_live_8e753f43f8defed950965395fc04f5dc7ab1035b', // Your actual public key
+                    key: 'pk_live_67e25636b35278bfadbfdaa6fb8e4e0d77f2f105', // Your actual public key
                     email: registeredUserEmail,
                     amount: AFA_BUNDLE_PRICE * 100, // Amount in kobo/pesewas
                     currency: 'GHS',
