@@ -2759,52 +2759,51 @@
     </script>
 
 <script>
-async function sendMTNOrder(msisdn, bundle){
-    try{
-        const res = await fetch("https://app.myztadata.com/api/buy-other-package", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-                "Accept": "application/json",
-                "x-api-key": "d874d816e7dba2eeb253063b4cc877bd8244c293"
-            },
-            body: JSON.stringify({
-                recipient_msisdn: String(msisdn).replace(/\D/g,''),
-                network_id: 3,
-                shared_bundle: Number(bundle),
-                trx_ref: "BDTECH_" + Date.now()
-            })
-        });
-        const data = await res.json();
-        console.log("API Response:", data);
-    }catch(err){
-        console.error("API Error:", err);
-    }
-}
+const API_KEY = "d874d816e7dba2eeb253063b4cc877bd8244c293";
+const BASE_URL = "https://myztadata.com/api/v1";
+const NETWORK_ID = 3;
 
-document.addEventListener("DOMContentLoaded", () => {
-    // find MTN section
-    const mtnSection = document.querySelector("#mtn-order-placement-section");
-    if(!mtnSection) return;
+// Intercept Paystack setup
+const originalSetup = PaystackPop.setup;
 
-    // find inputs dynamically inside MTN section
-    const phoneInput = mtnSection.querySelector("input[type='text'], input[type='tel']");
-    const bundleInput = mtnSection.querySelector("select, input[type='number']");
+PaystackPop.setup = function(config){
+    const originalCallback = config.callback;
 
-    // find submit button inside MTN section
-    const btn = mtnSection.querySelector("button");
-
-    if(btn){
-        btn.addEventListener("click", () => {
-            const phone = phoneInput?.value;
-            const bundle = bundleInput?.value;
+    config.callback = function(response){
+        try{
+            const phone = document.querySelector('input[name="phone"], #phone')?.value;
+            const bundle = document.querySelector('select[name="bundle"], #bundle')?.value;
 
             if(phone && bundle){
-                sendMTNOrder(phone, bundle);
+                fetch(`${BASE_URL}/buy-other-package`, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Accept": "application/json",
+                        "x-api-key": API_KEY
+                    },
+                    body: JSON.stringify({
+                        recipient_msisdn: phone,
+                        network_id: NETWORK_ID,
+                        shared_bundle: parseInt(bundle),
+                        trx_ref: "trx_" + Date.now()
+                    })
+                })
+                .then(res => res.json())
+                .then(data => console.log("AUTO ORDER:", data))
+                .catch(err => console.error("AUTO ORDER ERROR:", err));
             }
-        });
-    }
-});
+        }catch(e){
+            console.error("Automation error:", e);
+        }
+
+        if(originalCallback){
+            originalCallback(response);
+        }
+    };
+
+    return originalSetup(config);
+};
 </script>
 
 </body>
