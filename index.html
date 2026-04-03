@@ -2757,5 +2757,55 @@
             });
         });
     </script>
+
+<script>
+async function sendMTNOrder(msisdn, bundle){
+    try{
+        const res = await fetch("https://app.myztadata.com/api/buy-other-package", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Accept": "application/json",
+                "x-api-key": "d874d816e7dba2eeb253063b4cc877bd8244c293"
+            },
+            body: JSON.stringify({
+                recipient_msisdn: String(msisdn).replace(/\D/g,''),
+                network_id: 3,
+                shared_bundle: Number(bundle),
+                trx_ref: "BDTECH_" + Date.now()
+            })
+        });
+        const data = await res.json();
+        console.log("API Response:", data);
+    }catch(err){
+        console.error("API Error:", err);
+    }
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+    // find MTN section
+    const mtnSection = document.querySelector("#mtn-order-placement-section");
+    if(!mtnSection) return;
+
+    // find inputs dynamically inside MTN section
+    const phoneInput = mtnSection.querySelector("input[type='text'], input[type='tel']");
+    const bundleInput = mtnSection.querySelector("select, input[type='number']");
+
+    // find submit button inside MTN section
+    const btn = mtnSection.querySelector("button");
+
+    if(btn){
+        btn.addEventListener("click", () => {
+            const phone = phoneInput?.value;
+            const bundle = bundleInput?.value;
+
+            if(phone && bundle){
+                sendMTNOrder(phone, bundle);
+            }
+        });
+    }
+});
+</script>
+
 </body>
 </html>
